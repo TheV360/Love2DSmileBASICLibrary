@@ -221,6 +221,7 @@ function love.draw()
 		-- Add screen shake
 		if window.shake.enabled then
 			if canMoveWindow() then
+				-- I n n o v a t i o n
 				love.window.setPosition(window.x + window.shake.cx, window.y + window.shake.cy)
 				
 				love.graphics.draw(window.screen.canvas, window.screen.x - window.shake.cx, window.screen.y - window.shake.cy, 0, window.screen.scale)

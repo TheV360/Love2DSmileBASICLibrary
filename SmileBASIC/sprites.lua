@@ -19,12 +19,78 @@ Sprites = {
 		FlipV    = 0x10,
 		AltBlend = 0x20,
 		Additive = 0x20
-	}
+	},
+	
+	-- Also this
+	Definitions = {},
+	DefaultDefinition = function() return {
+		0,  -- X coordinate
+		0,  -- Y coordinate
+		16, -- Width
+		16, -- Height
+		0,  -- Home X
+		0,  -- Home Y
+		1   -- Attribute (Show)
+	} end
 }
 
 for i = 1, #Sprites.Layers do
 	Sprites.Layers[i].Batch = love.graphics.newSpriteBatch(Sprites.Sheet)
 end
+
+-- Each line contains:
+-- x, y, w, h, hx, hy, a
+-- note the lack of an index.
+function Sprites.readDefinitionListing(filename)
+	local chr = love.filesystem.read(filename)
+	local index = 0
+	
+	if not chr then
+		print("Yikes! That doesn't exist!")
+		return
+	end
+	
+	Sprites.Definitions = {}
+	
+	-- Can probably be made smaller, but works for now.
+	for l in chr:gmatch("[^\r\n]+") do
+		local tmp = Sprites.DefaultDefinition() -- make a new default table
+		local source = 1 -- good naming
+		
+		-- Split by comma
+		-- Unless no commas, then just use default.
+		for c in l:gmatch("[^,]+") do
+			if #c > 0 then
+				tmp[source] = tonumber(c)
+			end
+			
+			source = source + 1
+		end
+		
+		if #l > 0 then
+			-- The reason this doesn't have a quad inside is because I can just make a quad for each sprite,
+			--  then change the quad when the sprite changes, instead of making a new quad altogether.
+			Sprites.Definitions[index] = {
+				x = tmp[1],
+				y = tmp[2],
+				
+				width = tmp[3],
+				height = tmp[4],
+				
+				home = {
+					x = tmp[5],
+					y = tmp[6]
+				},
+				
+				attribute = tmp[7]
+			}
+		end
+		
+		index = index + 1
+	end
+end
+
+Sprites.readDefinitionListing("resources/sprites.txt")
 
 function Sprites.AABB(x1, y1, w1, h1, x2, y2, w2, h2)
 	return	x1 < x2 + w2 and
@@ -59,6 +125,10 @@ function Sprites.layerBlendMode(index, blendMode)
 	
 	return Sprites.Layers[index].BlendMode
 end
+function Sprites.setDefinition(id, u, v, width, height, homeX, homeY, attribute)
+	-- TODO!!!!
+	-- if 
+end
 
 function Sprites.new(u, v, width, height, home, attributes)
 	if u and not v then
@@ -85,7 +155,8 @@ function Sprites.new(u, v, width, height, home, attributes)
 	
 	-- Core
 	function sprite:setup()
-		self:refreshQuad()
+		quad = love.graphics.newQuad(self.u, self.v, self.width, self.height, Sprites.Sheet:getDimensions())
+		
 		self:refreshTransform()
 	end
 	function sprite:update()
@@ -151,7 +222,7 @@ function Sprites.new(u, v, width, height, home, attributes)
 		end
 	end
 	function sprite:refreshQuad()
-		self.quad = love.graphics.newQuad(self.u, self.v, self.width, self.height, Sprites.Sheet:getDimensions())
+		self.quad:setViewport(self.u, self.v, self.width, self.height)
 	end
 	function sprite:refreshTransform()
 		-- GOOD ENOUGH FOR NOW

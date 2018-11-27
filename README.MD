@@ -16,7 +16,8 @@ This repo is split into a bunch of separate things.
 	* `hsvtest.png` and `othertest.png`: Both of these are used with the shader I'm messing around with.
 * `maps/`: For now, it contains one example map (`map1.v360map`) that you can use. It's in my horrible file format, too!
 * `resources/`: Some things in this are important, some things in this aren't.
-	* `characters.txt`: Very important. [Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt). Used for the text layer's font.
+	* `characters.txt`: Very important. ~~[Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt)~~ Generously donated by 12Me21. Used for the text layer's font.
+	* `sprites.txt`: Relatively important. If you leave these out, that's completely fine. Used for Sprite definitions.
 	* `font_8x8.png` and `font_16x8.png`: Not important. If you want some debug fonts, here you go. The 8x8 one is the regular SmileBASIC font. The 16x8 one is made by me.
 	* `icon.png`: Not important. Fish.
 	* `sprites.png`: Very important. Used in `SmileBASIC/sprites.lua`.

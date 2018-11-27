@@ -32,16 +32,16 @@ Text = {
 		Red         = 3,
 		Green       = 4,
 		Lime        = 5,
-		Mustard     = 6,
+		Olive       = 6,
 		Yellow      = 7,
-		DarkBlue    = 8,
+		Navy        = 8,
 		Blue        = 9,
 		Purple      = 10,
-		Pink        = 11,
+		Magenta     = 11,
 		Teal        = 12,
 		Cyan        = 13,
-		DarkGray    = 14,
-		DarkGrey    = 14,
+		Gray        = 14,
+		Grey        = 14,
 		White       = 15
 	},
 	
@@ -49,15 +49,17 @@ Text = {
 }
 
 -- Names, to reduce redundancy.
-Text.Colors.Transparent = Text.Colors[ 0] Text.Colors.DarkBlue    = Text.Colors[ 8]
-Text.Colors.Black       = Text.Colors[ 1] Text.Colors.Blue        = Text.Colors[ 9]
-Text.Colors.Maroon      = Text.Colors[ 2] Text.Colors.Purple      = Text.Colors[10]
-Text.Colors.Red         = Text.Colors[ 3] Text.Colors.Pink        = Text.Colors[11]
-Text.Colors.Green       = Text.Colors[ 4] Text.Colors.Teal        = Text.Colors[12]
-Text.Colors.Lime        = Text.Colors[ 5] Text.Colors.Cyan        = Text.Colors[13]
-Text.Colors.Mustard     = Text.Colors[ 6] Text.Colors.DarkGray    = Text.Colors[14]
-Text.Colors.Yellow      = Text.Colors[ 7] Text.Colors.White       = Text.Colors[15]
-Text.Colors.DarkGrey    = Text.Colors[14]
+Text.Colors.Transparent = Text.Colors[ 0] Text.Colors.Navy    = Text.Colors[ 8]
+Text.Colors.Black       = Text.Colors[ 1] Text.Colors.Blue    = Text.Colors[ 9]
+Text.Colors.Maroon      = Text.Colors[ 2] Text.Colors.Purple  = Text.Colors[10]
+Text.Colors.Red         = Text.Colors[ 3] Text.Colors.Magenta = Text.Colors[11]
+Text.Colors.Green       = Text.Colors[ 4] Text.Colors.Teal    = Text.Colors[12]
+Text.Colors.Lime        = Text.Colors[ 5] Text.Colors.Cyan    = Text.Colors[13]
+Text.Colors.Olive       = Text.Colors[ 6] Text.Colors.Gray    = Text.Colors[14]
+Text.Colors.Yellow      = Text.Colors[ 7] Text.Colors.White   = Text.Colors[15]
+
+-- Just in case
+Text.Colors.Grey = Text.Colors[14]
 
 -- Batch thing
 Text.Batch = love.graphics.newSpriteBatch(Text.Sheet)
@@ -71,21 +73,17 @@ Text.BackgroundShader = love.graphics.newShader[[
 ]]
 
 function Text.readCharacterListing(filename)
-	local chr = love.filesystem.read(filename)
+	local file = love.filesystem.read(filename)
+	
+	if not file then
+		print("Yikes! That doesn't exist!")
+		return
+	end
 	
 	Text.Characters = {}
 	
-	for l in chr:gmatch("[^\r\n]+") do
-		local tmp = {}
-		
-		-- Split by comma
-		for c in l:gmatch("[^,]+") do
-			table.insert(tmp, tonumber(c))
-		end
-		
-		if #l > 0 then
-			Text.Characters[tmp[1]] = love.graphics.newQuad(tmp[2], tmp[3], Text.Size, Text.Size, Text.Sheet:getDimensions())
-		end
+	for character, x, y in file:gmatch("(%d+),(%d+),(%d+)") do
+		Text.Characters[tonumber(character)] = love.graphics.newQuad(tonumber(x), tonumber(y), Text.Size, Text.Size, Text.Sheet:getDimensions())
 	end
 end
 
