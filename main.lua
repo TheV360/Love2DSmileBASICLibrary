@@ -4,7 +4,7 @@ require "watch"
 function love.load()
 	window = {
 		-- Game Title & Save Folder Name
-		title = "Secret Project that you're not supposed to know about yet",
+		title = "Love2DSmileBASICLibrary Sample",
 		version = "v0.0",
 		icon = nil,
 		
@@ -108,7 +108,7 @@ function love.load()
 	require "game"
 	
 	-- Set up pixel font
-	local supportedCharacters = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~◆◇▼▲▽△★☆"
+	local supportedCharacters = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¥◆◇▼▲▽△★☆"
 	window.fonts.sb8x8 = love.graphics.newImageFont("resources/font_8x8.png", supportedCharacters)
 	window.fonts.sb8x16 = love.graphics.newImageFont("resources/font_8x16.png", supportedCharacters)
 	love.graphics.setFont(window.fonts.sb8x16)

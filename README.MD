@@ -8,6 +8,10 @@ This repo is split into a bunch of separate things.
 
 * `docs/`: Contains where the documentation should be. I say "should be" because this is currently where some To-do lists and API specs live.
 * `game/`: You don't have to worry about anything here. You can easily throw it away. This does have two test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, and... shaders? for some reason?
+	* `apiTest.lua`: WHOOAAAAAAA fish (Demonstrates loading a map from a file, Sprite callbacks and blend modes, Background callbacks, and Text colors and transparency)
+	* `textTest.lua`: Random text colors and printing! Also shaders for some reason! This also demonstrates a "cut out" effect for text with a foreground color of 0 (transparent).
+	* `funky.frag`: I split the shader into another file.
+	* `hsvtest.png` and `othertest.png`: Both of these are used with the shader I'm messing around with.
 * `maps/`: For now, it contains one example map (`map1.v360map`) that you can use. It's in my horrible file format, too!
 * `resources/`: Some things in this are important, some things in this aren't.
 	* `characters.txt`: Very important. [Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt). Used for the text layer's font.
@@ -23,10 +27,15 @@ This repo is split into a bunch of separate things.
 	* `sprites.lua`: Finished? For creating movable, rotatable, stretchable, animatable, dyeable pieces of a spritesheet.
 	* `text.lua`: Finished. For creating text screens and printing text to them.
 	* `zsorting.lua`: Finished? For sorting all things that inherit from `smilebasic.lua`, and drawing them in order.
+* `game.lua`: `main.lua` runs this after setting up a bunch of things. I styled it after PICO-8's game loop thing. For now, it's just a game selector. If you want to modify this: use `setup()`, `update()`, and `draw()`.
+* `main.lua`: This is the template I usually start with when making things in Love2D.
+* `watch.lua`: This is a small library that keeps track of when a condition is met, how long it has happened for, and when it stops being true. Useful for buttons and other inputs.
+* `README.MD`: HMM I WONDER
 
 # To-do
 
-Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
+* Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
+* The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
 
 # Issues? Improvements?
 
