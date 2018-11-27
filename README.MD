@@ -2,6 +2,8 @@
 
 This is SmileBASIC, but for Love2D. Except not really.
 
+![aaaaaaaaaaaaa](.screenshotsForREADME/apiTest.png)
+
 # Layout
 
 This repo is split into a bunch of separate things.
@@ -30,7 +32,7 @@ This repo is split into a bunch of separate things.
 * `game.lua`: `main.lua` runs this after setting up a bunch of things. I styled it after PICO-8's game loop thing. For now, it's just a game selector. If you want to modify this: use `setup()`, `update()`, and `draw()`.
 * `main.lua`: This is the template I usually start with when making things in Love2D.
 * `watch.lua`: This is a small library that keeps track of when a condition is met, how long it has happened for, and when it stops being true. Useful for buttons and other inputs.
-* `README.MD`: HMM I WONDER
+* `README.MD`: You're already there.
 
 # To-do
 
@@ -43,5 +45,5 @@ Tell me! I really want to help people port their SmileBASIC programs to other la
 
 # Credits
 * Me - All of the code
-* SmileBoom - Most assets
-* @otya128 - Character listings
+* SmileBoom - Most assets, also for making SmileBASIC
+* [otya](https://github.com/otya128) - Character listings
