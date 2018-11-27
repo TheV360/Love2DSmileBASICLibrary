@@ -1,27 +1,39 @@
 function setup()
 	fishes = {}
 	
-	for i = 1, 64 do
-		-- fishes[i] = Sprites.new(320 + (math.random() > .5 and 0 or 16), 112)
-		fishes[i] = Sprites.new(math.random() > .5 and 244 or 245)
-		fishes[i].z = math.random() > .75 and -4 or -1 
-		-- fishes[i] = Sprites.new(math.floor(math.random() * 256))
-		if math.random() > .5 then fishes[i]:toggleAttribute(Sprites.Attributes.FlipH) end
-		if math.random() > .5 then fishes[i]:toggleAttribute(Sprites.Attributes.FlipV) end
-		if math.random() > .5 then fishes[i]:toggleAttribute(Sprites.Attributes.Rot90) end
-		if math.random() > .5 then fishes[i]:toggleAttribute(Sprites.Attributes.Rot180) end
-		fishes[i]:toggleAttribute(Sprites.Attributes.Additive)
-		fishes[i]:offset(
+	for i = 1, 8 do
+		local thisOne = Sprites.new(math.random() > .5 and 413 or 414)
+		fishes[#fishes + 1] = thisOne
+		
+		thisOne.z = math.random() > .75 and -4 or -1 
+		if math.random() > .5 then thisOne:toggleAttribute(Sprites.Attributes.FlipH) end
+		if math.random() > .5 then thisOne:toggleAttribute(Sprites.Attributes.FlipV) end
+		if math.random() > .5 then thisOne:toggleAttribute(Sprites.Attributes.Rot90) end
+		if math.random() > .5 then thisOne:toggleAttribute(Sprites.Attributes.Rot180) end
+		thisOne:toggleAttribute(Sprites.Attributes.Additive)
+		thisOne:offset(
 			24 +           (i % 12) * 32,
 			08 + math.floor(i / 12) * 32
 		)
-		fishes[i]:home(8, 8)
-		fishes[i]:rotation(i * 8)
-		fishes[i].variables[1] = 0--i * 3
-		fishes[i].variables[2] = (window.screen.width / 8) + (i * 2)
-		fishes[i].variables[3] = (window.screen.height / 8) + (i * 2)
-		fishes[i].variables[4] = i * 2
-		fishes[i]:addCallback(becomeFunky)
+		thisOne:home(8, 8)
+		thisOne:rotation(i * 8)
+		thisOne.variables[1] = 0--i * 3
+		thisOne.variables[2] = (window.screen.width / 8) + (i * 2)
+		thisOne.variables[3] = (window.screen.height / 8) + (i * 2)
+		thisOne.variables[4] = i * 2
+		thisOne:addCallback(becomeFunky)
+	end
+	
+	for i = 0, 15 do
+		local thisOne = Sprites.new(i)
+		fishes[#fishes + 1] = thisOne
+		
+		thisOne.z = -16
+		
+		thisOne:offset(
+			24 +           (i % 12) * 32,
+			08 + math.floor(i / 12) * 32
+		)
 	end
 	
 	local thing = Backgrounds.fromV360Map("maps/map1.v360map")

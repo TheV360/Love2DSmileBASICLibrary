@@ -42,10 +42,10 @@ end
 -- x, y, w, h, hx, hy, a
 -- note the lack of an index.
 function Sprites.readDefinitionListing(filename)
-	local chr = love.filesystem.read(filename)
+	local file = love.filesystem.read(filename)
 	local index = 0
 	
-	if not chr then
+	if not file then
 		print("Yikes! That doesn't exist!")
 		return
 	end
@@ -53,7 +53,7 @@ function Sprites.readDefinitionListing(filename)
 	Sprites.Definitions = {}
 	
 	-- Can probably be made smaller, but works for now.
-	for l in chr:gmatch("[^\r\n]+") do
+	for l in file:gmatch("[^\r\n]+") do
 		local tmp = Sprites.DefaultDefinition() -- make a new default table
 		local source = 1 -- good naming
 		
@@ -71,8 +71,8 @@ function Sprites.readDefinitionListing(filename)
 			-- The reason this doesn't have a quad inside is because I can just make a quad for each sprite,
 			--  then change the quad when the sprite changes, instead of making a new quad altogether.
 			Sprites.Definitions[index] = {
-				x = tmp[1],
-				y = tmp[2],
+				u = tmp[1],
+				v = tmp[2],
 				
 				width = tmp[3],
 				height = tmp[4],
@@ -82,7 +82,7 @@ function Sprites.readDefinitionListing(filename)
 					y = tmp[6]
 				},
 				
-				attribute = tmp[7]
+				attributes = tmp[7]
 			}
 		end
 		
@@ -131,13 +131,6 @@ function Sprites.setDefinition(id, u, v, width, height, homeX, homeY, attribute)
 end
 
 function Sprites.new(u, v, width, height, home, attributes)
-	if u and not v then
-		local s = u
-		
-		u =           (s % 32) * 16
-		v = math.floor(s / 32) * 16
-	end
-	
 	local sprite = {
 		type = "sprite",
 		
@@ -153,9 +146,17 @@ function Sprites.new(u, v, width, height, home, attributes)
 	
 	sprite = SmileBASIC.apply(sprite, 0, 0, 0, width, height, home)
 	
+	-- Holy heck the stuff around this needs to be refactored
+	if u and not v then
+		sprite.u,       sprite.v       = Sprites.Definitions[u].u,      Sprites.Definitions[u].v
+		sprite.width,   sprite.height  = Sprites.Definitions[u].width,  Sprites.Definitions[u].height
+		sprite._home.x, sprite._home.y = Sprites.Definitions[u].home.x, Sprites.Definitions[u].home.y
+		sprite.attributes              = Sprites.Definitions[u].attributes
+	end
+	
 	-- Core
 	function sprite:setup()
-		quad = love.graphics.newQuad(self.u, self.v, self.width, self.height, Sprites.Sheet:getDimensions())
+		self.quad = love.graphics.newQuad(self.u, self.v, self.width, self.height, Sprites.Sheet:getDimensions())
 		
 		self:refreshTransform()
 	end
@@ -249,8 +250,6 @@ function Sprites.new(u, v, width, height, home, attributes)
 	function sprite:toggleAttribute(attr)
 		self.attributes = bit.bxor(self.attributes, attr)
 		--self.attributes = self.attributes ~ attr
-		
-		self:refreshQuad()
 	end
 	
 	sprite:setup()

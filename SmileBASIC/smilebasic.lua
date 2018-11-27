@@ -74,7 +74,7 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 			-- 	self.animations[SmileBASIC.Animations.XY] = nil
 			-- end
 			-- if z and self.animations[SmileBASIC.Animations.Z] then
-			-- 	self.animations[SmileBASIC.Animations.XY] = nil
+			-- 	self.animations[SmileBASIC.Animations.Z] = nil
 			-- end
 			
 			if x then self.x = x end
