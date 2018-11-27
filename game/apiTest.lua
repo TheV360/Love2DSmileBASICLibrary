@@ -31,8 +31,8 @@ function setup()
 		thisOne.z = -16
 		
 		thisOne:offset(
-			24 +           (i % 12) * 32,
-			08 + math.floor(i / 12) * 32
+			8 +           (i % 12) * 32,
+			8 + math.floor(i / 12) * 32
 		)
 	end
 	

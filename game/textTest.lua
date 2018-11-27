@@ -1,27 +1,9 @@
-States = {
-	Intro = -1,
-	TitleScreen = 0,
-	Overworld = 1,
-	Battle = {
-		setup = function()
-		end,
-		update = function()
-		end,
-		draw = function()
-		end,
-		exit = function()
-		end
-	}
-}
-State = "Battle"
-
 function setup()
-	States[State].setup()
-	
 	sb = {}
 	
 	t = Text.new(50, 30)
 	table.insert(sb, t)
+	t:color(0, 15)
 	t:print("What")
 	
 	h = love.graphics.newImage("game/hsvtest.png")
@@ -29,10 +11,8 @@ function setup()
 end
 
 function update()
-	States[State].update()
-	
 	t:locate(math.random(0, t.width - 1), math.random(15, t.height - 1))
-	t:color(math.random() > .5 and math.random(0, 15) or 0, math.random(2, 15))
+	-- t:color(math.random() > .5 and math.random(0, 15) or 0, math.random(2, 15))
 	t:print("Hello, world! This sentence is too long to fit on one line of the text screen.", false)
 	
 	h_shader:send("time", window.frames / 120)
@@ -50,6 +30,4 @@ function draw()
 		ZSort.add(sb[i])
 	end
 	ZSort.flush()
-	
-	States[State].draw()
 end
