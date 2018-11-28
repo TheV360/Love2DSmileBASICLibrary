@@ -22,20 +22,54 @@ Sprites = {
 	},
 	
 	-- Also this
-	Definitions = {},
-	DefaultDefinition = function() return {
-		0,  -- X coordinate
-		0,  -- Y coordinate
-		16, -- Width
-		16, -- Height
-		0,  -- Home X
-		0,  -- Home Y
-		1   -- Attribute (Show)
-	} end
+	DefinitionSize = 7,
+	Definitions = {
+		Default = {
+			u = 0,
+			v = 0,
+			
+			width = 16,
+			height = 16,
+			
+			home = {
+				x = 0,
+				y = 0
+			},
+			
+			attributes = 1
+		}
+	}
 }
 
 for i = 1, #Sprites.Layers do
 	Sprites.Layers[i].Batch = love.graphics.newSpriteBatch(Sprites.Sheet)
+end
+
+-- String split function because it includes empty strings.
+-- Seems pretty slow. Optimize?
+function stringSplitFunky(string, delimiter, max)
+	local result = {}
+	local next = string.find(string, delimiter)
+	local current = 0
+	
+	if not next then return {string} end
+	
+	repeat
+		table.insert(result, string.sub(string, current, next - 1))
+		current = next + 1
+		
+		if max and #result > max then
+			break
+		end
+		
+		next = string.find(string, delimiter, current)
+	until not next
+	
+	if not (max and #result > max) then
+		table.insert(result, string.sub(string, current))
+	end
+	
+	return result
 end
 
 -- Each line contains:
@@ -50,53 +84,55 @@ function Sprites.readDefinitionListing(filename)
 		return
 	end
 	
-	Sprites.Definitions = {}
+	-- Clear definitions (except Default)
+	Sprites.Definitions = {Default = Sprites.Definitions.Default}
 	
 	-- Can probably be made smaller, but works for now.
 	for l in file:gmatch("[^\r\n]+") do
-		local tmp = Sprites.DefaultDefinition() -- make a new default table
-		local source = 1 -- good naming
+		-- make a new default table, with a max size to stop possible things from happening.
+		local tmp = stringSplitFunky(l, ",", Sprites.DefinitionSize)
+		local i
 		
-		-- Split by comma
-		-- Unless no commas, then just use default.
-		for c in l:gmatch("[^,]+") do
-			if #c > 0 then
-				tmp[source] = tonumber(c)
+		for i = 1, #tmp do
+			if tmp[i] and #tmp[i] > 0 then
+				tmp[i] = tonumber(tmp[i])
+			else
+				-- Will cause the or operator to do a thing
+				tmp[i] = false
 			end
-			
-			source = source + 1
 		end
 		
-		if #l > 0 then
-			-- The reason this doesn't have a quad inside is because I can just make a quad for each sprite,
-			--  then change the quad when the sprite changes, instead of making a new quad altogether.
-			Sprites.Definitions[index] = {
-				u = tmp[1],
-				v = tmp[2],
-				
-				width = tmp[3],
-				height = tmp[4],
-				
-				home = {
-					x = tmp[5],
-					y = tmp[6]
-				},
-				
-				attributes = tmp[7]
-			}
-		end
+		Sprites.setDefinition(index, unpack(tmp))
 		
 		index = index + 1
 	end
+end
+function Sprites.setDefinition(id, u, v, width, height, homeX, homeY, attributes)
+	-- The reason this doesn't have a quad inside is because I can just make a quad for each sprite,
+	--  then change the quad when the sprite changes, instead of making a new quad altogether.
+	Sprites.Definitions[id] = {
+		u = u or Sprites.Definitions.Default.u,
+		v = v or Sprites.Definitions.Default.v,
+		
+		width = width or Sprites.Definitions.Default.width,
+		height = height or Sprites.Definitions.Default.height,
+		
+		home = {
+			x = homeX or Sprites.Definitions.Default.home.x,
+			y = homeY or Sprites.Definitions.Default.home.y
+		},
+		
+		attributes = attributes or Sprites.Definitions.Default.attributes
+	}
 end
 
 Sprites.readDefinitionListing("resources/sprites.txt")
 
 function Sprites.AABB(x1, y1, w1, h1, x2, y2, w2, h2)
-	return	x1 < x2 + w2 and
-			y1 < y2 + h2 and
-			x1 + w1>= x2 and
-			y1 + h1>= y2
+	return x1 <  x2 + w2
+	and    y1 <  y2 + h2
+	and    x1 + w1 >= x2
+	and    y1 + h1 >= y2
 end
 function Sprites.startBatch()
 	local i
@@ -124,10 +160,6 @@ function Sprites.layerBlendMode(index, blendMode)
 	if index and blendMode then Sprites.Layers[index].BlendMode = blendMode end
 	
 	return Sprites.Layers[index].BlendMode
-end
-function Sprites.setDefinition(id, u, v, width, height, homeX, homeY, attribute)
-	-- TODO!!!!
-	-- if 
 end
 
 function Sprites.new(u, v, width, height, home, attributes)

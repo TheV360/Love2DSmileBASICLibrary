@@ -12,7 +12,7 @@ end
 
 function update()
 	t:locate(math.random(0, t.width - 1), math.random(15, t.height - 1))
-	-- t:color(math.random() > .5 and math.random(0, 15) or 0, math.random(2, 15))
+	t:color(math.random(0, 15), math.random(2, 15))
 	t:print("Hello, world! This sentence is too long to fit on one line of the text screen.", false)
 	
 	h_shader:send("time", window.frames / 120)
