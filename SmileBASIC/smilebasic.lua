@@ -104,17 +104,17 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 	
 	function sb:color(r, g, b, a)
 		if r or g or b or a then
-			if r then self._color[0] = r end
-			if g then self._color[1] = g end
-			if b then self._color[2] = b end
+			if r then self._color[1] = r end
+			if g then self._color[2] = g end
+			if b then self._color[3] = b end
 			if a then
-				self._color[3] = a
+				self._color[4] = a
 			else
-				self._color[3] = 1
+				self._color[4] = 1
 			end
 		end
 		
-		return self._color[0], self._color[1], self._color[2], self._color[3]
+		return self._color[1], self._color[2], self._color[3], self._color[4]
 	end
 	
 	function sb:scale(x, y)

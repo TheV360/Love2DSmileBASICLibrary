@@ -107,6 +107,7 @@ function Backgrounds.new(width, height)
 		local tileHalf = math.floor(Backgrounds.Tiles.Size / 2)
 		
 		Backgrounds.Batch:clear()
+		Backgrounds.Batch:setColor(self._color)
 		for j = 0, self.height - 1 do
 			for i = 0, self.width - 1 do
 				if bit.band(self.map[j][i], Backgrounds.Attributes.Tile) > 0 then
@@ -132,8 +133,6 @@ function Backgrounds.new(width, height)
 			end
 		end
 		Backgrounds.Batch:flush()
-		
-		love.graphics.setColor(self._color)
 		love.graphics.draw(Backgrounds.Batch, self.x, self.y, self._rotation, self._scale.x, self._scale.y, self._home.x, self._home.y)
 	end
 	

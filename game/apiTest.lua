@@ -24,23 +24,29 @@ function setup()
 		thisOne:addCallback(becomeFunky)
 	end
 	
-	for i = 0, 15 do
-		local thisOne = Sprites.new(i)
+	for i = 0, 159 do
+		local thisOne = Sprites.new(i + 2048)
 		fishes[#fishes + 1] = thisOne
 		
 		thisOne.z = -16
 		
+		thisOne.variables[1] = 8 +           (i % 16) * 24
+		thisOne.variables[2] = 4 + math.floor(i / 16) * 24
+		
 		thisOne:offset(
-			8 +           (i % 12) * 32,
-			8 + math.floor(i / 12) * 32
+			thisOne.variables[1],
+			thisOne.variables[2]
 		)
+		
+		thisOne:addCallback(sineFunky)
 	end
 	
 	local thing = Backgrounds.fromV360Map("maps/map1.v360map")
 	
 	for i = 1, #thing do
-		thing[i]:addCallback(alsoProbablyFunky)
+		-- thing[i]:addCallback(alsoProbablyFunky)
 		thing[i].variables[1] = i - 1
+		thing[i]:color(1,1,1,.125)
 	end
 	
 	thing[1].z = 0
@@ -81,8 +87,8 @@ end
 function becomeFunky(sprite)
 	sprite:offset(
 		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], sprite.variables[2], true) + (window.screen.width / 2),
-		cosine(window.frames + sprite.variables[1], 90 + sprite.variables[4], sprite.variables[3], true) + (window.screen.height / 2),
-		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], 5, true)
+		cosine(window.frames + sprite.variables[1], 90 + sprite.variables[4], sprite.variables[3], true) + (window.screen.height / 2)--[[,
+		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], 5, true)]]
 	)
 	sprite:rotation(
 		sprite:rotation() + 2
@@ -108,14 +114,24 @@ function alsoProbablyFunky(bg)
 		sine(window.frames + (bg.variables[1] * 8), 120, 32, true), 0
 	)
 	
-	-- local i, j
+	local i, j
 	
-	-- for j = 0, bg.height - 1 do
-	-- 	for i = 0, bg.width - 1 do
-	-- 		if window.frames % 60 ==  0 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipH) end
-	-- 		if window.frames % 60 == 15 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipV) end
-	-- 		if window.frames % 60 == 30 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot90) end
-	-- 		if window.frames % 60 == 45 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot180) end
-	-- 	end
-	-- end
+	for j = 0, bg.height - 1 do
+		for i = 0, bg.width - 1 do
+			if window.frames % 60 ==  0 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipH) end
+			if window.frames % 60 == 15 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipV) end
+			if window.frames % 60 == 30 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot90) end
+			if window.frames % 60 == 45 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot180) end
+		end
+	end
+end
+
+function sineFunky(thing)
+	thing:offset(
+		thing.variables[1],
+		thing.variables[2] + math.floor(sine(window.frames + (thing.index * 4), 120, 16, true) + .5)
+	)
+	thing:rotation(
+		thing:rotation() + 2
+	)
 end
