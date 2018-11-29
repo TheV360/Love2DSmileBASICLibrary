@@ -10,8 +10,13 @@ Animations start at the current thing, then move to the first element, then seco
 When they run out of loops, they stop at the endpoint! *they don't go back to the first thing!*
 Edge case 2: when animating Definition numbers, they're secretly 0 by default even if you define them specifically! When animating them, if they go back to the first thing, they go back to 0! Not your specifically defined spchr, but spdef 0!
 
-# Edge cases and Animation Types
-## Sprites
+# Animation Types
+## General
+- nil: Anything
+	- Must supply a table with `data` and `map` items.
+		- `data`: contains stuff you want to change. can also contain other stuff. best use: set this to a table reference. data to animate MUST BE NUMBERS
+		- `map`: contains what indexes you want to change. this can be used to avoid animating some things.
+## SmileBASIC
 - 0 or "XY": XY-coordinates
 - 1 or "Z": Z-coordinates
 - 2 or "UV": UV-coordinates (Coordinates of the definition source image)
@@ -27,4 +32,8 @@ Edge case 2: when animating Definition numbers, they're secretly 0 by default ev
 	- -3 = `Variable[3]`
 	- and so on. No limit as someone may exploit SP variable with a length greater than 8
 
-
+# THINGS TO DO!
+* ~~looping~~
+* actual functions to add animations
+* functions that remove their respective animation type
+* check to see if relative coordinates even work.

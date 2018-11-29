@@ -66,7 +66,11 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 	
 	-- Core will always be different, so it is not included.
 	function sb:runAnimations()
-		--if self.animations[Animations.Types.Offset] then x, y = 
+		local i
+		
+		for i = 1, #self.animations do
+			self.animations[i]:update()
+		end
 	end
 	function sb:runCallbacks()
 		local i
@@ -79,13 +83,6 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 	-- SmileBASIC-like
 	function sb:offset(x, y, z)
 		if x or y or z then
-			-- if (x or y) and self.animations[SmileBASIC.Animations.XY] then
-			-- 	self.animations[SmileBASIC.Animations.XY] = nil
-			-- end
-			-- if z and self.animations[SmileBASIC.Animations.Z] then
-			-- 	self.animations[SmileBASIC.Animations.Z] = nil
-			-- end
-			
 			if x then self.x = x end
 			if y then self.y = y end
 			if z then self.z = z end

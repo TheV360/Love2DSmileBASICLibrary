@@ -47,9 +47,9 @@ function Animations.new(table, type, relative, keyframes, loop)
 		type = type,
 		relative = relative or true,
 		current = {
-			index = 0,
-			frames = -1,
-			endFrame = -1
+			index = 1,
+			frames = 0,
+			endFrame = nil
 		},
 		keyframes = keyframes or {Animations.animationPart(1, 0, Animations.Timing.Instant)},
 		loop = loop or 1
@@ -57,108 +57,120 @@ function Animations.new(table, type, relative, keyframes, loop)
 	
 	-- Core
 	function animation:setup()
+		self.current.endFrame = self.keyframes[self.current.index].time
+		
 		-- 0th element is a fake keyframe containing the initial state of the animation.
-		-- self.keyframes[0] = {item = self:getData()}
+		self.keyframes[0] = {item = self:getData()}
 	end
 	function animation:update()
-		-- local d
+		local d
 		
-		-- self.current.frames = self.current.frames + 1
-		
-		-- if self.current.frames >= self.current.endFrame then
-		-- 	self.current.index = self.current.index + 1
+		if self.current.frames > self.current.endFrame then
+			self.current.index = self.current.index + 1
 			
-		-- 	if self.current.index > #self.keyframes then
-		-- 		if self.loop > 0 then
-		-- 			if self.loop > 1 then
-		-- 				self.loop = self.loop - 1
+			if self.current.index > #self.keyframes then
+				if self.loop > 0 then
+					if self.loop > 1 then
+						self.loop = self.loop - 1
 						
-		-- 				self.current.index = 1
-		-- 			else
-		-- 				self = nil
-		-- 				return
-		-- 			end
-		-- 		end
+						self.current.index = 1
+					else
+						-- Ran out of loops, will now die
+						self = nil
+						return
+					end
+				else
+					self.current.index = 1
+				end
+			end
 				
-		-- 		self.current.frames = 0
-		-- 		self.current.endFrame = self.keyframes[self.current.index].time
-		-- 	end
-		-- end
+			self.current.endFrame = self.keyframes[self.current.index].time
+			self.current.frames = 0
+		end
 		
-		-- for i = 1, #self.keyframes[self.current.index].item do
-		-- 	self.keyframes[self.current.index].timingFunction(self.current.frames / self.current.endFrame, self.keyframes[self.current.index].item[i])
+		self.current.frames = self.current.frames + 1
+		
+		self:applyData()
+	end
+	function animation:getData()
+		if self.type then
+			if     self.type == Animations.Types.Offset      then
+				return {self.table.x, self.table.y}
+			elseif self.type == Animations.Types.Depth       then
+				return {self.table.z}
+			elseif self.type == Animations.Types.SourceImage then
+				return {self.table.u, self.table.v}
+			elseif self.type == Animations.Types.Definition  then
+				return {self.table.lastUsedDefinition}
+			elseif self.type == Animations.Types.Rotation    then
+				return {self.table._rotation}
+			elseif self.type == Animations.Types.Scale       then
+				return self.table._scale
+			elseif self.type == Animations.Types.Color       then
+				return self.table._color
+			elseif self.type == Animations.Types.Variable or self.type < 0 then
+				if self.type < 0 then
+					return {self.sb.variables[-self.type]}
+				else
+					return {self.sb.variables[8]}
+				end
+			end
+		else
+			return self.table
+		end
+	end
+	function animation:applyData()
+		if self.type then
+			if     self.type == Animations.Types.Offset      then
+				self.table.x = self:animate(1)
+				self.table.y = self:animate(2)
+			elseif self.type == Animations.Types.Depth       then
+				self.table.z = self:animate(1)
+			elseif self.type == Animations.Types.SourceImage then
+				self.table.u = self:animate(1)
+				self.table.v = self:animate(2)
+			elseif self.type == Animations.Types.Definition  then
+				self.table.lastUsedDefinition = self:animate(1)
+			elseif self.type == Animations.Types.Rotation    then
+				self.table._rotation = self:animate(1)
+			elseif self.type == Animations.Types.Scale       then
+				self.table._scale[1] = self:animate(1)
+				self.table._scale[2] = self:animate(2)
+			elseif self.type == Animations.Types.Color       then
+				self.table._color[1] = self:animate(1)
+				self.table._color[2] = self:animate(2)
+				self.table._color[3] = self:animate(3)
+				self.table._color[4] = self:animate(4)
+			elseif self.type == Animations.Types.Variable or self.type < 0 then
+				if self.type < 0 then
+					self.table.variables[-self.type] = self:animate(1)
+				else
+					self.table.variables[8] = self:animate(1)
+				end
+			end
+		else
+			local i
+			for i = 1, #self.table.map do
+				self.table.data[self.data.map[i]] = self:animate(i)
+			end
+		end
+	end
+	function animation:animate(index) -- convert to for loop, ran out of time
+		-- if self.relative then
+		-- 	return self.keyframes[0].item[index] + 
+		-- 	self.keyframes[self.current.index].timingFunction(
+		-- 		self.current.frames / self.current.endFrame,
+		-- 		self.keyframes[self.current.index - 1].item[index],
+		-- 		self.keyframes[self.current.index].item[index]
+		-- 	)
+		-- else
+			return self.keyframes[self.current.index].timingFunction(
+				self.current.frames / self.current.endFrame,
+				self.keyframes[self.current.index - 1].item[index],
+				self.keyframes[self.current.index].item[index]
+			)
 		-- end
 	end
--- 	function animation:getData()
--- 		if self.type then
--- 			if     self.type == Animations.Types.Offset      then
--- 				return {self.table.x, self.table.y}
--- 			elseif self.type == Animations.Types.Depth       then
--- 				return {self.table.z}
--- 			elseif self.type == Animations.Types.SourceImage then
--- 				return {self.table.u, self.table.v}
--- 			elseif self.type == Animations.Types.Definition  then
--- 				return {self.table.lastUsedDefinition}
--- 			elseif self.type == Animations.Types.Rotation    then
--- 				return {self.table._rotation}
--- 			elseif self.type == Animations.Types.Scale       then
--- 				return self.table._scale
--- 			elseif self.type == Animations.Types.Color       then
--- 				return self.table._color
--- 			elseif self.type == Animations.Types.Variable or self.type < 0 then
--- 				if self.type < 0 then
--- 					return {self.sb.variables[-self.type]}
--- 				else
--- 					return {self.sb.variables[8]}
--- 				end
--- 			end
--- 		else
--- 			return self.table
--- 		end
--- 	end
--- 	function animation:applyData(timingFunction, time)
--- 		if self.type then
--- 			if     self.type == Animations.Types.Offset      then
--- 				self.table.x = self:animate(1)
--- 				self.table.y = self:animate(2)
--- 			elseif self.type == Animations.Types.Depth       then
--- 				self.table.z = self:animate(1)
--- 			elseif self.type == Animations.Types.SourceImage then
--- 				self.table.u = self:animate(1)
--- 				self.table.v = self:animate(2)
--- 			elseif self.type == Animations.Types.Definition  then
--- 				self.table.lastUsedDefinition = self:animate(1)
--- 			elseif self.type == Animations.Types.Rotation    then
--- 				self.table._rotation = self:animate(1)
--- 			elseif self.type == Animations.Types.Scale       then
--- 				self.table._scale[1] = self:animate(1)
--- 				self.table._scale[2] = self:animate(2)
--- 			elseif self.type == Animations.Types.Color       then
--- 				self.table._color[1] = self:animate(1)
--- 				self.table._color[2] = self:animate(2)
--- 				self.table._color[3] = self:animate(3)
--- 				self.table._color[4] = self:animate(4)
--- 			elseif self.type == Animations.Types.Variable or self.type < 0 then
--- 				if self.type < 0 then
--- 					self.table.variables[-self.type] = self:animate(1)
--- 				else
--- 					self.table.variables[8] = self:animate(1)
--- 				end
--- 			end
--- 		else
--- 			local i
--- 			for i = 1, #self.table do
--- 				self.table[i] = self:animate(i)
--- 			end
--- 		end
--- 	end
--- 	function animation:animate(index) -- convert to for loop, ran out of time
--- 		return self.keyframes[self.current.index].timingFunction(
--- 			self.current.frames / self.current.endFrame,
--- 			self.keyframes[self.current.index - 1].item[index],
--- 			self.keyframes[self.current.index].item[index]
--- 		)
--- 	end
 	
 	animation:setup()
 	
