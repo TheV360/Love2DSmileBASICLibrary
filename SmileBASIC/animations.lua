@@ -63,7 +63,7 @@ function Animations.new(table, type, relative, keyframes, loop)
 		self.keyframes[0] = {item = self:getData()}
 	end
 	function animation:update()
-		local d
+		self.current.frames = self.current.frames + 1
 		
 		if self.current.frames > self.current.endFrame then
 			self.current.index = self.current.index + 1
@@ -75,7 +75,6 @@ function Animations.new(table, type, relative, keyframes, loop)
 						
 						self.current.index = 1
 					else
-						-- Ran out of loops, will now die
 						self = nil
 						return
 					end
@@ -83,12 +82,10 @@ function Animations.new(table, type, relative, keyframes, loop)
 					self.current.index = 1
 				end
 			end
-				
+			
 			self.current.endFrame = self.keyframes[self.current.index].time
-			self.current.frames = 0
+			self.current.frames = 1
 		end
-		
-		self.current.frames = self.current.frames + 1
 		
 		self:applyData()
 	end
@@ -116,7 +113,13 @@ function Animations.new(table, type, relative, keyframes, loop)
 				end
 			end
 		else
-			return self.table
+			local i, t = 0, {}
+			
+			for i = 1, #self.table.map do
+				t[i] = self.table.data[self.table.map[i]]
+			end
+			
+			return t
 		end
 	end
 	function animation:applyData()
@@ -150,12 +153,13 @@ function Animations.new(table, type, relative, keyframes, loop)
 			end
 		else
 			local i
+			
 			for i = 1, #self.table.map do
-				self.table.data[self.data.map[i]] = self:animate(i)
+				self.table.data[self.table.map[i]] = self:animate(i)
 			end
 		end
 	end
-	function animation:animate(index) -- convert to for loop, ran out of time
+	function animation:animate(index)
 		-- if self.relative then
 		-- 	return self.keyframes[0].item[index] + 
 		-- 	self.keyframes[self.current.index].timingFunction(

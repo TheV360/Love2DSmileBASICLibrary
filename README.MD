@@ -4,12 +4,17 @@ This is SmileBASIC, but for Love2D. Except not really.
 
 ![A bunch of fish orbiting a map. There are two lines text in the top left corner that both read "Hello, world!". One is green.](.screenshotsForREADME/apiTest.png)
 
+# Usability status!
+
+Pretty gosh darn useable! The animation syntax is likely to change, but you can also use it the way I'm using it in `game/animTest.lua`
+
 # Layout
 
 This repo is split into a bunch of separate things.
 
 * `docs/`: Contains where the documentation should be. I say "should be" because this is currently where some To-do lists and API specs live.
-* `game/`: You don't have to worry about anything here. You can easily throw it away. This does have two test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, and... shaders? for some reason?
+* `game/`: You don't have to worry about anything here. You can easily throw it away. This does have ~~two~~ three test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, Animations, and... shaders? for some reason?
+	* `animTest.lua`: A demonstration of animations!
 	* `apiTest.lua`: WHOOAAAAAAA fish (Demonstrates loading a map from a file, Sprite callbacks, Sprite definitions, blend modes, Background callbacks, Text colors, and transparency)
 	* `textTest.lua`: Random text colors and printing! Also shaders for some reason! This also demonstrates a "cut out" effect for text with a foreground color of 0 (transparent).
 	* `funky.frag`: I split the shader into another file.
@@ -33,12 +38,14 @@ This repo is split into a bunch of separate things.
 * `game.lua`: `main.lua` runs this after setting up a bunch of things. I styled it after PICO-8's game loop thing. For now, it's just a game selector. If you want to modify this: use `setup()`, `update()`, and `draw()`.
 * `main.lua`: This is the template I usually start with when making things in Love2D.
 * `watch.lua`: This is a small library that keeps track of when a condition is met, how long it has happened for, and when it stops being true. Useful for buttons and other inputs.
+* `profile.lua`: This won't show up in the actual repo, but it's a lightweight profiler for Love2D. Disabled by default and not included, so you have to [download it from here](https://bitbucket.org/itraykov/profile.lua/src/master/profile.lua).
 * `README.MD`: You're already there.
 
 # To-do
 
 * Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
 * The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
+* Compress the sprites.txt file
 
 # Issues? Improvements?
 

@@ -13,7 +13,7 @@ function setup()
 	t2:scale(2, 1)
 	t2:addCallback(rotateAround)
 	
-	t2:color(Text.ColorIndex.Black, Text.ColorIndex.White)
+	t2:color(Text.Colors.Black, Text.Colors.White)
 	t2:print("I'm a 10x10 text screen! My text wraps really quickly and it's horrible! I'm pretty sure Text screens are a SmileBASIC 4 feature!")
 	
 	h = love.graphics.newImage("game/hsvtest.png")

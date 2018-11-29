@@ -7,7 +7,7 @@ Text = {
 	BackgroundShader = nil,
 	
 	Characters = {},
-	Colors = {
+	Palette = {
 		[ 0] = {0 , 0 , 0 , 0},
 		[ 1] = {0  , 0  , 0  },
 		[ 2] = {0.5, 0  , 0  },
@@ -25,7 +25,7 @@ Text = {
 		[14] = {0.5, 0.5, 0.5},
 		[15] = {1  , 1  , 1  }
 	},
-	ColorIndex = { -- makes funky music
+	Colors = {
 		Transparent = 0,
 		Black       = 1,
 		Maroon      = 2,
@@ -49,17 +49,17 @@ Text = {
 }
 
 -- Names, to reduce redundancy.
-Text.Colors.Transparent = Text.Colors[ 0] Text.Colors.Navy    = Text.Colors[ 8]
-Text.Colors.Black       = Text.Colors[ 1] Text.Colors.Blue    = Text.Colors[ 9]
-Text.Colors.Maroon      = Text.Colors[ 2] Text.Colors.Purple  = Text.Colors[10]
-Text.Colors.Red         = Text.Colors[ 3] Text.Colors.Magenta = Text.Colors[11]
-Text.Colors.Green       = Text.Colors[ 4] Text.Colors.Teal    = Text.Colors[12]
-Text.Colors.Lime        = Text.Colors[ 5] Text.Colors.Cyan    = Text.Colors[13]
-Text.Colors.Olive       = Text.Colors[ 6] Text.Colors.Gray    = Text.Colors[14]
-Text.Colors.Yellow      = Text.Colors[ 7] Text.Colors.White   = Text.Colors[15]
+Text.Palette.Transparent = Text.Palette[ 0] Text.Palette.Navy    = Text.Palette[ 8]
+Text.Palette.Black       = Text.Palette[ 1] Text.Palette.Blue    = Text.Palette[ 9]
+Text.Palette.Maroon      = Text.Palette[ 2] Text.Palette.Purple  = Text.Palette[10]
+Text.Palette.Red         = Text.Palette[ 3] Text.Palette.Magenta = Text.Palette[11]
+Text.Palette.Green       = Text.Palette[ 4] Text.Palette.Teal    = Text.Palette[12]
+Text.Palette.Lime        = Text.Palette[ 5] Text.Palette.Cyan    = Text.Palette[13]
+Text.Palette.Olive       = Text.Palette[ 6] Text.Palette.Gray    = Text.Palette[14]
+Text.Palette.Yellow      = Text.Palette[ 7] Text.Palette.White   = Text.Palette[15]
 
 -- Just in case
-Text.Colors.Grey = Text.Colors[14]
+Text.Palette.Grey = Text.Palette[14]
 
 -- Batch thing
 Text.Batch = love.graphics.newSpriteBatch(Text.Sheet)
@@ -96,7 +96,7 @@ function Text.new(width, height)
 		
 		text = nil,
 		
-		cursor = {x = 0, y = 0, fc = Text.ColorIndex.White, bc = Text.ColorIndex.Transparent}
+		cursor = {x = 0, y = 0, fc = Text.Colors.White, bc = Text.Colors.Transparent}
 	}
 	
 	text = SmileBASIC.apply(text, 0, 0, 0, width, height)
@@ -116,11 +116,11 @@ function Text.new(width, height)
 		for j = 0, self.height - 1 do
 			for i = 0, self.width - 1 do
 				if self.text[j][i].bc > 0 then
-					Text.BackgroundBatch:setColor(Text.Colors[self.text[j][i].bc])
+					Text.BackgroundBatch:setColor(Text.Palette[self.text[j][i].bc])
 					Text.BackgroundBatch:add(Text.Characters[self.text[j][i].chr], i * Text.Size, j * Text.Size)
 				end
 				if self.text[j][i].fc > 0 then
-					Text.Batch:setColor(Text.Colors[self.text[j][i].fc])
+					Text.Batch:setColor(Text.Palette[self.text[j][i].fc])
 					Text.Batch:add(Text.Characters[self.text[j][i].chr], i * Text.Size, j * Text.Size)
 				end
 			end

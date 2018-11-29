@@ -16,18 +16,7 @@ Backgrounds = {
 		Indexes = {}
 	},
 	
-	-- Enums, please don't change!
-	Animations = {
-		Offset      = 0, XY = 0,
-		Depth       = 1, Z  = 1,
-		-- NOT IN BACKGROUNDS --
-		-- NOT IN BACKGROUNDS --
-		Rotation    = 4, R  = 4,
-		Scale       = 5, S  = 5,
-		Color       = 6, C  = 6,
-		Variable    = 7, V  = 7,
-		Relative    = 8
-	},
+	-- Enum, please don't change!
 	Attributes = {
 		Tile   = 0x0fff,
 		Rot0   = 0x0000,
