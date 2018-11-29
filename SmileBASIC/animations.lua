@@ -1,4 +1,8 @@
--- Animations: Vague class that makes an object that updates other variables.
+-- Animations: Vague class that makes an object that updates specific SmileBASIC-related values.
+
+-- Maybe also allow a generic animation mode? You pass a table reference, it updates it over time.
+-- if self.type == nil then
+-- end
 
 Animations = {
 	Types = {
@@ -37,10 +41,10 @@ function Animations.animationPart(time, item, timingFunction)
 	return r
 end
 
-function Animations.new(sb, type, relative, keyframes, loop)
+function Animations.new(table, type, relative, keyframes, loop)
 	local animation = {
-		sb = sb,
-		type = type or Animations.Types.XY,
+		table = table,
+		type = type,
 		relative = relative or true,
 		current = {
 			index = 0,
@@ -53,8 +57,8 @@ function Animations.new(sb, type, relative, keyframes, loop)
 	
 	-- Core
 	function animation:setup()
-		-- self.initial = 
-		self.current.endFrame = self.keyframes[self.current.index].time
+		-- 0th element is a fake keyframe containing the initial state of the animation.
+		-- self.keyframes[0] = {item = self:getData()}
 	end
 	function animation:update()
 		-- local d
@@ -85,29 +89,69 @@ function Animations.new(sb, type, relative, keyframes, loop)
 		-- 	self.keyframes[self.current.index].timingFunction(self.current.frames / self.current.endFrame, self.keyframes[self.current.index].item[i])
 		-- end
 	end
-	function animation:getData()
-		-- if     self.type == Animations.Types.Offset      then
-			
-		-- elseif self.type == Animations.Types.Depth       then
-		-- elseif self.type == Animations.Types.SourceImage then
-		-- elseif self.type == Animations.Types.Definition  then
-		-- 	return self.sb.lastUsedDefinition
-		-- elseif self.type == Animations.Types.Rotation    then
-		-- 	return self.sb._rotation
-		-- elseif self.type == Animations.Types.Scale       then
-		-- 	return self.sb._scale
-		-- elseif self.type == Animations.Types.Color       then
-		-- 	return self.sb._color
-		-- elseif self.type == Animations.Types.Variable or self.type < 0 then
-		-- 	if self.type < 0 then
-		-- 		return {self.sb.variables[-self.type]}
-		-- 	else
-		-- 		return {self.sb.variables[8]}
-		-- 	end
-		-- end
-	end
-	function animation:applyData()
-	end
+-- 	function animation:getData()
+-- 		if self.type then
+-- 			if     self.type == Animations.Types.Offset      then
+-- 				return {self.table.x, self.table.y}
+-- 			elseif self.type == Animations.Types.Depth       then
+-- 				return {self.table.z}
+-- 			elseif self.type == Animations.Types.SourceImage then
+-- 				return {self.table.u, self.table.v}
+-- 			elseif self.type == Animations.Types.Definition  then
+-- 				return {self.table.lastUsedDefinition}
+-- 			elseif self.type == Animations.Types.Rotation    then
+-- 				return {self.table._rotation}
+-- 			elseif self.type == Animations.Types.Scale       then
+-- 				return self.table._scale
+-- 			elseif self.type == Animations.Types.Color       then
+-- 				return self.table._color
+-- 			elseif self.type == Animations.Types.Variable or self.type < 0 then
+-- 				if self.type < 0 then
+-- 					return {self.sb.variables[-self.type]}
+-- 				else
+-- 					return {self.sb.variables[8]}
+-- 				end
+-- 			end
+-- 		else
+-- 			return self.table
+-- 		end
+-- 	end
+-- 	function animation:applyData(timingFunction, time)
+-- 		if self.type then
+-- 			if     self.type == Animations.Types.Offset      then
+-- 				self.table.x = self:animate(timingFunction, time, 1)
+-- 				self.table.y = self:animate(timingFunction, time, 2)
+-- 			elseif self.type == Animations.Types.Depth       then
+-- 				self.table.z = self:animate(timingFunction, time, 1)
+-- 			elseif self.type == Animations.Types.SourceImage then
+-- 				self.table.u = self:animate(timingFunction, time, 1)
+-- 				self.table.v = self:animate(timingFunction, time, 2)
+-- 			elseif self.type == Animations.Types.Definition  then
+-- 				self.table.lastUsedDefinition = self:animate(timingFunction, time, 1)
+-- 			elseif self.type == Animations.Types.Rotation    then
+-- 				self.table._rotation = self:animate(timingFunction, time, 1)
+-- 			elseif self.type == Animations.Types.Scale       then
+-- 				self.table._scale[1] = self:animate(timingFunction, time, 1)
+-- 				self.table._scale[2] = self:animate(timingFunction, time, 2)
+-- 			elseif self.type == Animations.Types.Color       then
+-- 				self.table._color[1] = self:animate(timingFunction, time, 1)
+-- 				self.table._color[2] = self:animate(timingFunction, time, 2)
+-- 				self.table._color[3] = self:animate(timingFunction, time, 3)
+-- 				self.table._color[4] = self:animate(timingFunction, time, 4)
+-- 			elseif self.type == Animations.Types.Variable or self.type < 0 then
+-- 				if self.type < 0 then
+-- 					self.table.variables[-self.type] = self:animate(timingFunction, time, 1)
+-- 				else
+-- 					self.table.variables[8] = self:animate(timingFunction, time, 1)
+-- 				end
+-- 			end
+-- 		else
+-- 			return self.table
+-- 		end
+-- 	end
+-- 	function animation:animate(timingFunction, time, index)
+-- 		return timingFunction(time, self.keyframes[self.current.index - 1][index], self.keyframes[self.current.index][index])
+-- 	end
 	
 	animation:setup()
 	
