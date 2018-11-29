@@ -129,10 +129,10 @@ function Text.new(width, height)
 		Text.Batch:flush()
 		
 		love.graphics.setShader(Text.BackgroundShader)
-		love.graphics.draw(Text.BackgroundBatch, self.x, self.y, self._rotation, self._scale[1], self._scale[2], self._home.x, self._home.y)
+		love.graphics.draw(Text.BackgroundBatch, self.x, self.y, self._rotation * math.pi / 180, self._scale[1], self._scale[2], self._home.x, self._home.y)
 		love.graphics.setShader()
 		
-		love.graphics.draw(Text.Batch, self.x, self.y, self._rotation, self._scale[1], self._scale[2], self._home.x, self._home.y)		
+		love.graphics.draw(Text.Batch, self.x, self.y, self._rotation * math.pi / 180, self._scale[1], self._scale[2], self._home.x, self._home.y)		
 	end
 	
 	-- Text controls
