@@ -10,7 +10,7 @@ This repo is split into a bunch of separate things.
 
 * `docs/`: Contains where the documentation should be. I say "should be" because this is currently where some To-do lists and API specs live.
 * `game/`: You don't have to worry about anything here. You can easily throw it away. This does have two test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, and... shaders? for some reason?
-	* `apiTest.lua`: WHOOAAAAAAA fish (Demonstrates loading a map from a file, Sprite callbacks and blend modes, Background callbacks, and Text colors and transparency)
+	* `apiTest.lua`: WHOOAAAAAAA fish (Demonstrates loading a map from a file, Sprite callbacks, Sprite definitions, blend modes, Background callbacks, Text colors, and transparency)
 	* `textTest.lua`: Random text colors and printing! Also shaders for some reason! This also demonstrates a "cut out" effect for text with a foreground color of 0 (transparent).
 	* `funky.frag`: I split the shader into another file.
 	* `hsvtest.png` and `othertest.png`: Both of these are used with the shader I'm messing around with.

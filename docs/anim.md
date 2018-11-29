@@ -8,6 +8,7 @@ Animations.new()
 
 Animations start at the current thing, then move to the first element, then second, and if they loop, *they move back to the first thing!*
 When they run out of loops, they stop at the endpoint! *they don't go back to the first thing!*
+Edge case 2: when animating Definition numbers, they're secretly 0 by default even if you define them specifically! When animating them, if they go back to the first thing, they go back to 0! Not your specifically defined spchr, but spdef 0!
 
 # Edge cases and Animation Types
 ## Sprites

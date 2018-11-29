@@ -133,7 +133,7 @@ function Backgrounds.new(width, height)
 			end
 		end
 		Backgrounds.Batch:flush()
-		love.graphics.draw(Backgrounds.Batch, self.x, self.y, self._rotation, self._scale.x, self._scale.y, self._home.x, self._home.y)
+		love.graphics.draw(Backgrounds.Batch, self.x, self.y, self._rotation, self._scale[1], self._scale[2], self._home.x, self._home.y)
 	end
 	
 	-- SmileBASIC-like

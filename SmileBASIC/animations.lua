@@ -9,8 +9,7 @@ Animations = {
 		Rotation    = 4, R  = 4,
 		Scale       = 5, S  = 5,
 		Color       = 6, C  = 6,
-		Variable    = 7, V  = 7,
-		Relative    = 8
+		Variable    = 7, V  = 7
 	},
 	
 	Timing = {
@@ -38,14 +37,15 @@ function Animations.animationPart(time, item, timingFunction)
 	return r
 end
 
-function Animations.new(startingData, type, data, loop)
+function Animations.new(sb, type, relative, keyframes, loop)
 	local animation = {
+		sb = sb,
 		type = type or Animations.Types.XY,
-		initial = startingData or {0},
+		relative = relative or true,
 		current = {
-			index = 1,
-			frames = 0,
-			endFrame = nil
+			index = 0,
+			frames = -1,
+			endFrame = -1
 		},
 		keyframes = keyframes or {Animations.animationPart(1, 0, Animations.Timing.Instant)},
 		loop = loop or 1
@@ -53,7 +53,8 @@ function Animations.new(startingData, type, data, loop)
 	
 	-- Core
 	function animation:setup()
-		self.current.endFrame = self.data[self.current.index].time
+		-- self.initial = 
+		self.current.endFrame = self.keyframes[self.current.index].time
 	end
 	function animation:update()
 		-- local d
@@ -65,18 +66,47 @@ function Animations.new(startingData, type, data, loop)
 			
 		-- 	if self.current.index > #self.keyframes then
 		-- 		if self.loop > 0 then
-				
-		-- 		else
-					
+		-- 			if self.loop > 1 then
+		-- 				self.loop = self.loop - 1
+						
+		-- 				self.current.index = 1
+		-- 			else
+		-- 				self = nil
+		-- 				return
+		-- 			end
 		-- 		end
-		-- 	end
-		-- else
-		-- 	for i = 1, #self.keyframes[self.current.index].item do
-		-- 		self.keyframes[self.current.index].timingFunction(self.current.frames / self.current.endFrame, )
+				
+		-- 		self.current.frames = 0
+		-- 		self.current.endFrame = self.keyframes[self.current.index].time
 		-- 	end
 		-- end
 		
-		-- return 
+		-- for i = 1, #self.keyframes[self.current.index].item do
+		-- 	self.keyframes[self.current.index].timingFunction(self.current.frames / self.current.endFrame, self.keyframes[self.current.index].item[i])
+		-- end
+	end
+	function animation:getData()
+		-- if     self.type == Animations.Types.Offset      then
+			
+		-- elseif self.type == Animations.Types.Depth       then
+		-- elseif self.type == Animations.Types.SourceImage then
+		-- elseif self.type == Animations.Types.Definition  then
+		-- 	return self.sb.lastUsedDefinition
+		-- elseif self.type == Animations.Types.Rotation    then
+		-- 	return self.sb._rotation
+		-- elseif self.type == Animations.Types.Scale       then
+		-- 	return self.sb._scale
+		-- elseif self.type == Animations.Types.Color       then
+		-- 	return self.sb._color
+		-- elseif self.type == Animations.Types.Variable or self.type < 0 then
+		-- 	if self.type < 0 then
+		-- 		return {self.sb.variables[-self.type]}
+		-- 	else
+		-- 		return {self.sb.variables[8]}
+		-- 	end
+		-- end
+	end
+	function animation:applyData()
 	end
 	
 	animation:setup()

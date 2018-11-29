@@ -1,5 +1,14 @@
 -- SmileBASIC: Abstract library for Sprites, Backgrounds, and the Text layer, since they have a lot in common
 
+-- Other classes
+require "SmileBASIC/zsorting"
+require "SmileBASIC/animations"
+
+-- SmileBASIC-based classes
+require "SmileBASIC/text"
+require "SmileBASIC/sprites"
+require "SmileBASIC/backgrounds"
+
 SmileBASIC = {
 	Index = 0
 }
@@ -119,11 +128,11 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 	
 	function sb:scale(x, y)
 		if x or y then
-			if x then self._scale.x = x end
-			if y then self._scale.y = y end
+			if x then self._scale[1] = x end
+			if y then self._scale[2] = y end
 		end
 		
-		return self._scale.x, self._scale.y
+		return self._scale[1], self._scale[2]
 	end
 	
 	function sb:addCallback(func)

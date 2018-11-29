@@ -64,10 +64,17 @@ function love.load()
 		
 		-- Debug Console, more general debug business
 		debug = true,
+		profile = false,
 		
 		-- Take a screenshot with the start button
 		debugScreenshot = true
 	}
+	
+	if window.profile then
+		love.profiler = require('profile') 
+		love.profiler.hookall("Lua")
+		love.profiler.start()
+	end
 	
 	window.fullscreen = false
 	--window.fullscreen = love.window.showMessageBox(window.title, "Hello! Do you want windowed or fullscreen?", {"Windowed", "Fullscreen"}, "info") > 1
@@ -96,13 +103,6 @@ function love.load()
 	
 	-- Import all these "classes"
 	require "SmileBASIC/smilebasic"
-	require "SmileBASIC/zsorting"
-	
-	-- These rely on SmileBASIC existing
-	require "SmileBASIC/text"
-	require "SmileBASIC/animations"
-	require "SmileBASIC/sprites"
-	require "SmileBASIC/backgrounds"
 	
 	-- Game code goes into game
 	require "game"
@@ -255,6 +255,12 @@ function love.draw()
 		love.graphics.setColor(0.25, 1, 0.5)
 		love.graphics.print(txt, 2, 2, 0, window.screen.scale)
 		love.graphics.setColor(1, 1, 1)
+	end
+	
+	if window.profile and window.frames % 60 == 0 then
+		love.report = love.profiler.report("time", 20)
+		print(love.report)
+		love.profiler.reset()
 	end
 end
 

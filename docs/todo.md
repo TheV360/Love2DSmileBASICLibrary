@@ -6,3 +6,4 @@ Hello, welcome to the
 * ~~Finish Background spritebatch implementation~~ ***DONE***
 * The Sprite attributes do~~n't~~ work the way they should.~~ Is this even possible to do correctly?~~ ***IS THERE A BETTER WAY?***
 	* Could use shader for it, instead of using thing! (See commented-out shader in smilebasic.lua)
+* Add `~` and `*`, see issue [#2](https://github.com/TheV360/Love2DSmileBASICLibrary/issues/2).

@@ -173,7 +173,9 @@ function Sprites.new(u, v, width, height, home, attributes)
 		
 		quad = nil,
 		transformBase = love.math.newTransform(),
-		transformAttr = love.math.newTransform()
+		transformAttr = love.math.newTransform(),
+		
+		lastUsedDefinition = 0
 	}
 	
 	sprite = SmileBASIC.apply(sprite, 0, 0, 0, width, height, home)
@@ -184,6 +186,8 @@ function Sprites.new(u, v, width, height, home, attributes)
 		sprite.width,   sprite.height  = Sprites.Definitions[u].width,  Sprites.Definitions[u].height
 		sprite._home.x, sprite._home.y = Sprites.Definitions[u].home.x, Sprites.Definitions[u].home.y
 		sprite.attributes              = Sprites.Definitions[u].attributes
+		
+		sprite.lastUsedDefinition = u
 	end
 	
 	-- Core
@@ -240,10 +244,10 @@ function Sprites.new(u, v, width, height, home, attributes)
 	function sprite:AABBCollide(spr, scale)
 		if scale then
 			return Sprites.AABB(
-				self.x - (self._home.x * self._scale.x),
-				self.y - (self._home.x * self._scale.y),
-				self.width * self._scale.x,
-				self.height * self._scale.y
+				self.x - (self._home.x * self._scale[1]),
+				self.y - (self._home.x * self._scale[2]),
+				self.width  * self._scale[1],
+				self.height * self._scale[2]
 			)
 		else
 			return Sprites.AABB(
@@ -262,7 +266,7 @@ function Sprites.new(u, v, width, height, home, attributes)
 		self.transformBase:setTransformation(
 			math.floor(self.x), math.floor(self.y),
 			self._rotation * math.pi / 180,
-			self._scale.x, self._scale.y,
+			self._scale[1], self._scale[2],
 			self._home.x, self._home.y
 		)
 		self.transformAttr:setTransformation(
