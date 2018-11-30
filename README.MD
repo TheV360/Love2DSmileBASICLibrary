@@ -1,8 +1,11 @@
-# ![Pretty Icon](resources/icon.png) SmileBASIC Features for Love2D
+# ![Pretty Icon](resources/icon.png) Love2D SmileBASIC Library
 
-This is SmileBASIC, but for Love2D. Except not really.
+Want to port your games and applications over to Love2D? This library makes it easy to add Text layers, Sprites, Backgrounds, and Animations, while maintaining the SmileBASIC aesthetic!
 
-![A bunch of fish orbiting a map. There are two lines text in the top left corner that both read "Hello, world!". One is green.](.screenshotsForREADME/apiTest.png)
+<img src=".screenshotsForREADME/apiTest.png" alt='A bunch of fish orbiting a map. There are two lines text in the top left corner that both read "Hello, world!". One is green.' width="50%" /><img src=".screenshotsForREADME/apiTest2.png" alt='A grid of random sprites. Multiple fish are still orbiting a map. The map is translucent. The text is also still there, and it still reads "Hello, world!".' width="50%" />
+<img src=".screenshotsForREADME/animTest.png" alt='A very large sprite reading SmileBASIC (C) SmileBoom. The sprite is at an extreme angle.' width="50%" /><img src=".screenshotsForREADME/textTest.png" alt='Multiple lines of multicolor text fill the background. In the foreground is a small box of text. It is also at an extreme angle.' width="50%" />
+
+<sup>(Please note that I am not SmileBoom or associated with SmileBoom.)</sup>
 
 # Usability status!
 
@@ -10,7 +13,7 @@ Pretty gosh darn useable! The animation syntax is likely to change, but you can 
 
 # Layout
 
-This repo is split into a bunch of separate things.
+This repo is split into a bunch of separate folders and files.
 
 * `docs/`: Contains where the documentation should be. I say "should be" because this is currently where some To-do lists and API specs live.
 * `game/`: You don't have to worry about anything here. You can easily throw it away. This does have ~~two~~ three test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, Animations, and... shaders? for some reason?
@@ -51,7 +54,12 @@ This repo is split into a bunch of separate things.
 
 Tell me! I really want to help people port their SmileBASIC programs to other languages so SmileBASIC can live on. Feel free to create an Issue or do a Pull Request! I don't quite know how Git works!
 
+# License
+
+Just don't steal it and pass it off as your own thing, okay?
+
 # Credits
+
 * V360 - All of the code, Sprite definition listings
 * SmileBoom - Most assets, also for making SmileBASIC
 * [12Me21](https://github.com/12Me21) - Better character listings
