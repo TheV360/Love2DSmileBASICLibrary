@@ -3,13 +3,10 @@ function setup()
 	
 	t = Text.new(50, 30)
 	table.insert(sb, t)
-	t:color(0, 15)
-	t:print("Looping keyframed Sprite animations!")
-	t:print("Not final syntax at all.")
-	t:print("It's also off by a few frames.")
-	t:print("The code is a bit of a disaster, but IT WORKS!")
+	t:fakeBoot(nil, nil, "MINECRAFT2D")
 	
-	s = Sprites.new(4095)
+	s = Sprites.new(math.random(0, 15))
+	s:home(8, 8)
 	table.insert(sb, s)
 	
 	-- NOT FINAL SYNTAX!
@@ -52,7 +49,7 @@ function setup()
 end
 
 function update()
-	t:locate(0,8)
+	t:locate(0,20)
 	t:print(string.format("%.2f should change!!!!", tableThing.a))
 	t:print(tableThing.b .. " shouldn't change!!!!")
 	

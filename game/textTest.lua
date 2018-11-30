@@ -3,7 +3,7 @@ function setup()
 	
 	t = Text.new(50, 30)
 	table.insert(sb, t)
-	t:color(0, 15)
+	t:color(15, 0)
 	t:print("What")
 	
 	t2 = Text.new(10, 10)
@@ -23,7 +23,9 @@ end
 function update()
 	t:locate(math.random(0, t.width - 1), math.random(15, t.height - 1))
 	t:color(math.random(0, 15), math.random(2, 15))
-	t:print("Hello, world! This sentence is too long to fit on one line of the text screen.", false)
+	if window.frames % 10 == 0 then
+		t:print("Hello, world!" .. string.char(10) .. "This sentence is too long to fit on one line of the text screen.", false)
+	end
 	
 	for i = 1, #sb do
 		sb[i]:update()

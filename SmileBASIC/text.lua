@@ -102,7 +102,14 @@ function Text.new(width, height)
 	text = SmileBASIC.apply(text, 0, 0, 0, width, height)
 	
 	function text:setup()
-		self:clearScreen()
+		self.text = {}
+		
+		for j = 0, self.height - 1 do
+			self.text[j] = {}
+			for i = 0, self.width - 1 do
+				self.text[j][i] = {chr = 0, fc = self.cursor.fc, bc = self.cursor.bc}
+			end
+		end
 	end
 	function text:update()
 		-- Callbacks
@@ -143,12 +150,11 @@ function Text.new(width, height)
 		self.cursor.x = 0
 		self.cursor.y = 0
 		
-		self.text = {}
-		
 		for j = 0, self.height - 1 do
-			self.text[j] = {}
 			for i = 0, self.width - 1 do
-				self.text[j][i] = {chr = 0, fc = self.cursor.fc, bc = self.cursor.bc}
+				self.text[j][i].chr = 0
+				self.text[j][i].fc = self.cursor.fc
+				self.text[j][i].bc = self.cursor.bc
 			end
 		end
 	end
@@ -157,29 +163,32 @@ function Text.new(width, height)
 		
 		if newline ~= false and not newline then newline = true end
 		
-		for i = 1, #str do
-			self.text[self.cursor.y][self.cursor.x] = {chr = string.byte(str, i), fc = self.cursor.fc, bc = self.cursor.bc}
-			
-			self.cursor.x = self.cursor.x + 1
-			if self.cursor.x >= self.width then
-				self.cursor.x = 0
-				self.cursor.y = self.cursor.y + 1
-				
-				if self.cursor.y >= self.height then
-					self.cursor.y = self.height - 1
-					self:scroll(0, 1)
+		if str then
+			for i = 1, #str do
+				if string.byte(str, i) == 10 then
+					self:lineBreak()
+				else
+					self.text[self.cursor.y][self.cursor.x] = {chr = string.byte(str, i), fc = self.cursor.fc, bc = self.cursor.bc}
+					
+					self.cursor.x = self.cursor.x + 1
+					if self.cursor.x >= self.width then
+						self:lineBreak()
+					end
 				end
 			end
 		end
 		
 		if newline then
-			self.cursor.x = 0
-			self.cursor.y = self.cursor.y + 1
-				
-			if self.cursor.y >= self.height then
-				self.cursor.y = self.height - 1
-				self:scroll(0, 1)
-			end
+			self:lineBreak()
+		end
+	end
+	function text:lineBreak()
+		self.cursor.x = 0
+		self.cursor.y = self.cursor.y + 1
+			
+		if self.cursor.y >= self.height then
+			self.cursor.y = self.height - 1
+			self:scroll(0, 1)
 		end
 	end
 	function text:locate(x, y)
@@ -234,6 +243,24 @@ function Text.new(width, height)
 			end
 			
 			self.text = newText
+		end
+	end
+	
+	-- You found the easter egg!
+	function text:fakeBoot(version, bytesFree, projectString)
+		self:color(15, 0)
+		self:clearScreen()
+		self:print("SmileBASIC ver " .. (version or "3.6.0"))
+		self:print("(C)2011-20" .. os.date("%y") .." SmileBoom Co.Ltd.")
+		-- if cracked then
+		-- 	self:print("-- CRACKED BY V360TECH --")
+		-- end
+		self:print((bytesFree or 8327164) .. " bytes free")
+		self:print()
+		if projectString and #projectString > 0 then
+			self:print("[" .. projectString .. "]OK")
+		else
+			self:print("OK")
 		end
 	end
 	
