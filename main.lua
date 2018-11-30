@@ -250,10 +250,10 @@ function love.draw()
 		
 		local xofs = window.width - (60 * window.screen.scale)
 		love.graphics.setColor(0.125, 0.5, 0.25, 0.75)
-		love.graphics.rectangle("fill", xofs, 0, 60 * window.screen.scale, 60 * window.screen.scale)
+		love.graphics.rectangle("fill", xofs, 0, 60 * window.screen.scale, 61 * window.screen.scale)
 		for i = 0, #window.fpsPlot do
 			love.graphics.setColor(0.25, 1, 0.5, ((i - currIndex) % 60) / 120 + .5)
-			love.graphics.line(xofs + (i * window.screen.scale), (60 - (window.fpsPlot[i + 1] or i)) * window.screen.scale, xofs + ((i + 1) * window.screen.scale), (60 - (window.fpsPlot[i + 2] or (i + 1))) * window.screen.scale)
+			love.graphics.line(xofs + (i * window.screen.scale), (61 - (window.fpsPlot[i + 1] or i)) * window.screen.scale, xofs + ((i + 1) * window.screen.scale), (61 - (window.fpsPlot[i + 2] or (i + 1))) * window.screen.scale)
 		end
 		
 		local txt = "-- Stats --\n"

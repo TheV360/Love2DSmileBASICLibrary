@@ -10,7 +10,7 @@ function setup()
 	table.insert(sb, t2)
 	t2:offset(200, 120, -2)
 	t2:home(5*8, 5*8)
-	t2:scale(2, 1)
+	t2:scale(1, 1)
 	t2:addCallback(rotateAround)
 	
 	t2:color(Text.Colors.Black, Text.Colors.White)
@@ -25,6 +25,12 @@ function update()
 	t:color(math.random(0, 15), math.random(2, 15))
 	if window.frames % 10 == 0 then
 		t:print("Hello, world!" .. string.char(10) .. "This sentence is too long to fit on one line of the text screen.", false)
+		
+		if button.down["left"] then
+			t2:scroll(1, 1, true)
+		elseif button.down["right"] then
+			t2:scroll(-1, -1, true)
+		end
 	end
 	
 	for i = 1, #sb do
@@ -49,7 +55,10 @@ function draw()
 end
 
 function rotateAround(t)
-	t:rotation(
-		t:rotation() + 1
-	)
+	-- local i, j = t:scale()
+	-- t:scale(i * 1.001, j * 1.001)
+	
+	-- t:rotation(
+	-- 	t:rotation() + 1
+	-- )
 end

@@ -62,4 +62,5 @@ Just don't steal it and pass it off as your own thing, okay?
 
 * V360 - All of the code, Sprite definition listings
 * SmileBoom - Most assets, also for making SmileBASIC
+* [otya](https://github.com/otya128) - Working on a similar thing that deserves just as much credit
 * [12Me21](https://github.com/12Me21) - Better character listings

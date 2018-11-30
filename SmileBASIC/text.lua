@@ -168,7 +168,7 @@ function Text.new(width, height)
 				if string.byte(str, i) == 10 then
 					self:lineBreak()
 				else
-					self.text[self.cursor.y][self.cursor.x] = {chr = string.byte(str, i), fc = self.cursor.fc, bc = self.cursor.bc}
+					self:putCharAt(self.cursor.x, self.cursor.y, string.byte(str, i), self.cursor.fc, self.cursor.bc)
 					
 					self.cursor.x = self.cursor.x + 1
 					if self.cursor.x >= self.width then
@@ -181,6 +181,11 @@ function Text.new(width, height)
 		if newline then
 			self:lineBreak()
 		end
+	end
+	function text:putCharAt(x, y, chr, fc, bc)
+		self.text[y][x].chr = chr
+		self.text[y][x].fc = fc
+		self.text[y][x].bc = bc
 	end
 	function text:lineBreak()
 		self.cursor.x = 0
@@ -213,7 +218,7 @@ function Text.new(width, height)
 		
 		return math.max(0, math.min(x, self.width  - 1)), math.max(0, math.min(y, self.height - 1))
 	end
-	function text:scroll(x, y, keep)
+	function text:scroll(x, y, wrap)
 		if x or y then
 			x = x or 0
 			y = y or 0
@@ -221,7 +226,7 @@ function Text.new(width, height)
 			local i, j, t
 			local newText = {}
 			
-			if keep then
+			if wrap then
 				for j = 0, self.height - 1 do
 					newText[j] = {}
 					for i = 0, self.width - 1 do
