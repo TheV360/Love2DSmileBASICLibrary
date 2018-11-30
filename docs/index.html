@@ -23,15 +23,19 @@
 				</ol>
 				
 				<h2 id="getting-started">Getting Started</h2>
-				<p>Want to start making things, but don't want to cod</p>
+				<p>Want to start making things, but don't want to read through the entire documentation? Here's a small starter program I wrote for you. Replace the <code>game.lua</code> file in the base directory with this, and you'll get some text that prints every frame!</p>
 <pre class="prettyprint"><code class="language-lua"
 >function setup()
+	-- Make a table to hold all the elements we want to update and draw each frame
 	sb = {}
 	
 	-- Make a text screen
 	t = Text.new(50, 30) -- Make a 50x30 text screen
 	table.insert(sb, t) -- Add its reference to the "sb" table.
 	t:color(0, 15) -- Make the text transparent on a background of white.
+	
+	-- Print some test text to the text screen
+	-- Note that this does not have a second argument, so it will put a line break at the end.
 	t:print("This is an example script, showing off the text layer, sprites, and a background!")
 	
 	-- Make a SmileBASIC logo
@@ -50,7 +54,7 @@ end
 -- Every frame, do this
 function update()
 	-- We didn't lose the text reference, so print some text every frame
-	t:print("Hello, world! ")
+	t:print("Hello, world! ", false) -- We don't want a line break, so put false at the end.
 	
 	-- Handle callbacks and animations, neither of which you're currently using. Still useful.
 	for i = 1, #sb do
@@ -59,6 +63,7 @@ function update()
 end
 
 function draw()
+	-- Yes, you have to manually clear the screen.
 	love.graphics.clear(0, 0, 0)
 	
 	-- Z-sort everything you added
@@ -70,7 +75,8 @@ function draw()
 end</code></pre>
 				
 				<h2 id="smilebasic-dot-lua">What's the deal with <code>smilebasic.lua</code>?</h2>
-				
+				<p><code>smilebasic.lua</code> is a sort of abstract class <s>written by a person who doesn't understand abstract classes</s>, that is only used internally. Please don't use it.</p>
+				<p>If you're wondering what it does, it contains one function: <code>SmileBASIC.add()</code>. This function will add some functions and variables to a table given to it. It adds properties like color, offset, scale, and rotation. It also adds some helper functions, such as <code>sb:offset()</code>, <code>sb:scale()</code>, and <code>sb:runCallbacks()</code>. These functions will be explained in the General functions section. Oh, that seems to be the next one!</p>
 				
 				<h2 id="general-functions">General Functions</h2>
 				
