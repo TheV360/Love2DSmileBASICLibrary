@@ -15,7 +15,7 @@ Pretty gosh darn useable! The animation syntax is likely to change, but you can 
 
 This repo is split into a bunch of separate folders and files.
 
-* `docs/`: Contains the documentation. (https://thev360.github.io/Love2DSmileBASICLibrary/)[You can read it online here!]
+* `docs/`: Contains the documentation. [You can read it online here!](https://thev360.github.io/Love2DSmileBASICLibrary/)
 * `game/`: You don't have to worry about anything here. You can easily throw it away. This does have ~~two~~ three test programs that test Sprites, Backgrounds, Text, Basic Z-sorting, Animations, and... shaders? for some reason?
 	* `animTest.lua`: A demonstration of animations!
 	* `apiTest.lua`: WHOOAAAAAAA fish (Demonstrates loading a map from a file, Sprite callbacks, Sprite definitions, blend modes, Background callbacks, Text colors, and transparency)
