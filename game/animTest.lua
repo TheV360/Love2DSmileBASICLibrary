@@ -29,6 +29,17 @@ function setup()
 		Animations.animationPart(20, {4,4}, Animations.Timing.Sine)
 	}, 0)
 	
+	for i = 0, 63 do
+		s = Sprites.new(i)
+		table.insert(sb, s)
+		s:home(8, 8)
+		s.animations[1] = Animations.new(s, Animations.Types.Offset, false, {
+			Animations.animationPart(120, {400 - math.floor(i / 16) * 16, (i % 16) * 16}, Animations.Timing.Linear),
+			Animations.animationPart(60, {400 - (i % 16) * 16, 240}, Animations.Timing.Linear),
+			Animations.animationPart(60, {400 - (i % 16), 240}, Animations.Timing.Sine)
+		}, 0)
+	end
+	
 	-- Animating a variable in a table
 	tableThing = {
 		a = 32,
@@ -46,7 +57,10 @@ function update()
 	t:print(tableThing.b .. " shouldn't change!!!!")
 	
 	variableAnimation:update()
-	s:update()
+	
+	for i = 1, #sb do
+		sb[i]:update()
+	end
 end
 
 function draw()
