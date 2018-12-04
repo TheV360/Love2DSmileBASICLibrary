@@ -2,6 +2,8 @@
 
 Want to port your games and applications over to Love2D? This library makes it easy to add Text layers, Sprites, Backgrounds, and Animations, while maintaining the SmileBASIC aesthetic!
 
+**WARNING:** Due to copyright concerns, the default SmileBASIC Sprites and Backgrounds are not distributed with this library. Replace both `resources/sprites.png` and `resources/tiles.png` with their actual versions before using this library. You can also just use a different spritesheet and tilesheet, but that sorta misses the point of this entire library... <sup><sub>(The text is distributed with this because why not)</sub></sup>
+
 <img src=".screenshotsForREADME/apiTest.png" alt='A bunch of fish orbiting a map. There are two lines text in the top left corner that both read "Hello, world!". One is green.' width="50%" /><img src=".screenshotsForREADME/apiTest2.png" alt='A grid of random sprites. Multiple fish are still orbiting a map. The map is translucent. The text is also still there, and it still reads "Hello, world!".' width="50%" />
 <img src=".screenshotsForREADME/animTest.png" alt='A very large sprite reading SmileBASIC (C) SmileBoom. The sprite is at an extreme angle.' width="50%" /><img src=".screenshotsForREADME/textTest.png" alt='Multiple lines of multicolor text fill the background. In the foreground is a small box of text. It is also at an extreme angle.' width="50%" />
 
@@ -28,9 +30,9 @@ This repo is split into a bunch of separate folders and files.
 	* `sprites.txt`: Relatively important. If you leave these out, that's completely fine. Used for Sprite definitions.
 	* `font_8x8.png` and `font_16x8.png`: Not important. If you want some debug fonts, here you go. The 8x8 one is the regular SmileBASIC font. The 16x8 one is made by me.
 	* `icon.png`: Not important. Fish.
-	* `sprites.png`: Very important. Used in `SmileBASIC/sprites.lua`.
+	* `sprites.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/sprites.lua`.
 	* `text.png`: Very important. Used in `SmileBASIC/text.lua`.
-	* `tiles.png`: Very important. Used in `SmileBASIC/backgrounds.lua`. Inconsistent naming, but okay.
+	* `tiles.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/backgrounds.lua`. Inconsistent naming, but okay.
 * `SmileBASIC/`: Contains all the modules. Or whatever they're called.
 	* `animations.lua`: Unfinished. For animating Sprites and Backgrounds.
 	* `backgrounds.lua`: Finished. For creating tile backgrounds.
@@ -49,6 +51,7 @@ This repo is split into a bunch of separate folders and files.
 * Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
 * The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
 * Compress the sprites.txt file
+* Add attributes to text
 
 # Issues? Improvements?
 
