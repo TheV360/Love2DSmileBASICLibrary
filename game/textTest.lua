@@ -24,13 +24,20 @@ function update()
 	t:locate(math.random(0, t.width - 1), math.random(15, t.height - 1))
 	t:color(math.random(0, 15), math.random(2, 15))
 	if window.frames % 10 == 0 then
-		t:print("Hello, world!" .. string.char(10) .. "This sentence is too long to fit on one line of the text screen.", false)
-		
-		if button.down["left"] then
-			t2:scroll(1, 1, true)
-		elseif button.down["right"] then
-			t2:scroll(-1, -1, true)
-		end
+		t:print("Hello, world!" .. string.char(10) .. string.char(13) .. "This sentence is too long to fit on one line of the text screen.", false)
+	end
+	
+	if button.downTime["up"] % 5 == 1 then
+		t2:scroll(0, 1, true)
+	end
+	if button.downTime["down"] % 5 == 1 then
+		t2:scroll(0, -1, true)
+	end
+	if button.downTime["left"] % 5 == 1 then
+		t2:scroll(1, 0, true)
+	end
+	if button.downTime["right"] % 5 == 1 then
+		t2:scroll(-1, 0, true)
 	end
 	
 	for i = 1, #sb do

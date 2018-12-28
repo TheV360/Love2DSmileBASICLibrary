@@ -113,11 +113,7 @@ function SmileBASIC.apply(old, x, y, z, width, height, home, rotation, color, sc
 			if r then self._color[1] = r end
 			if g then self._color[2] = g end
 			if b then self._color[3] = b end
-			if a then
-				self._color[4] = a
-			else
-				self._color[4] = 1
-			end
+			if a then self._color[4] = a end
 		end
 		
 		return self._color[1], self._color[2], self._color[3], self._color[4]

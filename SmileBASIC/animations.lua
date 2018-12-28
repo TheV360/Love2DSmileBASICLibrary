@@ -42,6 +42,8 @@ function Animations.animationPart(time, item, timingFunction)
 end
 
 function Animations.new(table, type, relative, keyframes, loop)
+	if table.type ~= "sprite" and (type == Animations.Types.UV or type == Animations.Types.I) then return nil end
+	
 	local animation = {
 		table = table,
 		type = type,
@@ -133,7 +135,7 @@ function Animations.new(table, type, relative, keyframes, loop)
 				self.table.u = self:animate(1)
 				self.table.v = self:animate(2)
 			elseif self.type == Animations.Types.Definition  then
-				self.table.lastUsedDefinition = self:animate(1)
+				self.table:useDefinition(math.floor(self:animate(1)))
 			elseif self.type == Animations.Types.Rotation    then
 				self.table._rotation = self:animate(1)
 			elseif self.type == Animations.Types.Scale       then

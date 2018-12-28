@@ -126,7 +126,7 @@ function Sprites.setDefinition(id, u, v, width, height, homeX, homeY, attributes
 	}
 end
 
-Sprites.readDefinitionListing("resources/sprites.txt")
+Sprites.readDefinitionListing("resources/sprites.csv")
 
 function Sprites.AABB(x1, y1, w1, h1, x2, y2, w2, h2)
 	return x1 <  x2 + w2
@@ -257,6 +257,16 @@ function Sprites.new(u, v, width, height, home, attributes)
 				self.height
 			)
 		end
+	end
+	function sprite:useDefinition(d)
+		self.u,       self.v       = Sprites.Definitions[d].u,      Sprites.Definitions[d].v
+		self.width,   self.height  = Sprites.Definitions[d].width,  Sprites.Definitions[d].height
+		self._home.x, self._home.y = Sprites.Definitions[d].home.x, Sprites.Definitions[d].home.y
+		self.attributes            = Sprites.Definitions[d].attributes
+		
+		self.lastUsedDefinition = u
+		
+		self:refreshQuad()
 	end
 	function sprite:refreshQuad()
 		self.quad:setViewport(self.u, self.v, self.width, self.height)

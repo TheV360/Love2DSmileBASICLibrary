@@ -26,8 +26,8 @@ This repo is split into a bunch of separate folders and files.
 	* `hsvtest.png` and `othertest.png`: Both of these are used with the shader I'm messing around with.
 * `maps/`: For now, it contains one example map (`map1.v360map`) that you can use. It's in my horrible file format, too!
 * `resources/`: Some things in this are important, some things in this aren't.
-	* `characters.txt`: Very important. ~~[Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt)~~ [Generously donated by 12Me21](https://github.com/TheV360/Love2DSmileBASICLibrary/pull/1). Used for the text layer's font.
-	* `sprites.txt`: Relatively important. If you leave these out, that's completely fine. Used for Sprite definitions.
+	* `characters.csv`: Very important. ~~[Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt)~~ [Generously donated by 12Me21](https://github.com/TheV360/Love2DSmileBASICLibrary/pull/1). Used for the text layer's font.
+	* `sprites.csv`: Relatively important. If you leave these out, that's completely fine. Used for Sprite definitions.
 	* `font_8x8.png` and `font_16x8.png`: Not important. If you want some debug fonts, here you go. The 8x8 one is the regular SmileBASIC font. The 16x8 one is made by me.
 	* `icon.png`: Not important. Fish.
 	* `sprites.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/sprites.lua`.
@@ -50,7 +50,6 @@ This repo is split into a bunch of separate folders and files.
 
 * Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
 * The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
-* Compress the sprites.txt file
 * Add attributes to text
 
 # Issues? Improvements?
@@ -65,5 +64,5 @@ Just don't steal it and pass it off as your own thing, okay?
 
 * V360 - All of the code, Sprite definition listings
 * SmileBoom - Most assets, also for making SmileBASIC
-* [otya](https://github.com/otya128) - Working on a similar thing that deserves just as much credit
+* [otya](https://github.com/otya128) - Working on a similar thing that deserves a lot of credit
 * [12Me21](https://github.com/12Me21) - Better character listings

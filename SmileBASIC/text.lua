@@ -6,6 +6,14 @@ Text = {
 	BackgroundBatch = nil,
 	BackgroundShader = nil,
 	
+	Attributes = {
+		Rot0     = 0x00,
+		Rot90    = 0x02,
+		Rot180   = 0x04,
+		Rot270   = 0x06,
+		FlipH    = 0x08,
+		FlipV    = 0x10
+	},
 	Characters = {},
 	Palette = {
 		[ 0] = {0 , 0 , 0 , 0},
@@ -88,7 +96,7 @@ function Text.readCharacterListing(filename)
 end
 
 -- Character Listing
-Text.readCharacterListing("resources/characters.txt")
+Text.readCharacterListing("resources/characters.csv")
 
 function Text.new(width, height)
 	local text = {
@@ -168,7 +176,7 @@ function Text.new(width, height)
 				if string.byte(str, i) == 10 then
 					self:lineBreak()
 				else
-					self:putCharAt(self.cursor.x, self.cursor.y, string.byte(str, i), self.cursor.fc, self.cursor.bc)
+					self:setCharacter(self.cursor.x, self.cursor.y, string.byte(str, i), self.cursor.fc, self.cursor.bc)
 					
 					self.cursor.x = self.cursor.x + 1
 					if self.cursor.x >= self.width then
@@ -181,11 +189,6 @@ function Text.new(width, height)
 		if newline then
 			self:lineBreak()
 		end
-	end
-	function text:putCharAt(x, y, chr, fc, bc)
-		self.text[y][x].chr = chr
-		self.text[y][x].fc = fc
-		self.text[y][x].bc = bc
 	end
 	function text:lineBreak()
 		self.cursor.x = 0
@@ -249,6 +252,22 @@ function Text.new(width, height)
 			
 			self.text = newText
 		end
+	end
+	
+	-- Internal
+	function text:newCharacter(chr, fc, bc, attr)
+		return {
+			chr = chr or 0,
+			fc = fc or 15,
+			bc = bc or 0,
+			attr = attr or 0
+		}
+	end
+	function text:setCharacter(x, y, chr, fc, bc, attr)
+		self.text[y][x].chr = chr
+		self.text[y][x].fc = fc
+		self.text[y][x].bc = bc
+		self.text[y][x].attr = attr
 	end
 	
 	-- You found the easter egg!
