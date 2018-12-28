@@ -104,7 +104,7 @@ function Text.new(width, height)
 		
 		text = nil,
 		
-		cursor = {x = 0, y = 0, fc = Text.Colors.White, bc = Text.Colors.Transparent}
+		cursor = {x = 0, y = 0, z = 0, fc = Text.Colors.White, bc = Text.Colors.Transparent, attr = 0}
 	}
 	
 	text = SmileBASIC.apply(text, 0, 0, 0, width, height)
@@ -115,7 +115,7 @@ function Text.new(width, height)
 		for j = 0, self.height - 1 do
 			self.text[j] = {}
 			for i = 0, self.width - 1 do
-				self.text[j][i] = {chr = 0, fc = self.cursor.fc, bc = self.cursor.bc}
+				self.text[j][i] = self:newCharacter(0)
 			end
 		end
 	end
@@ -160,9 +160,7 @@ function Text.new(width, height)
 		
 		for j = 0, self.height - 1 do
 			for i = 0, self.width - 1 do
-				self.text[j][i].chr = 0
-				self.text[j][i].fc = self.cursor.fc
-				self.text[j][i].bc = self.cursor.bc
+				self:setCharacter(i, j, 0)
 			end
 		end
 	end
@@ -174,9 +172,9 @@ function Text.new(width, height)
 		if str then
 			for i = 1, #str do
 				if string.byte(str, i) == 10 then
-					self:lineBreak()
+					if self.cursor.x ~= 0 then self:lineBreak() end -- SmileBASIC hides linebreaks if they happen on a line wrap.
 				else
-					self:setCharacter(self.cursor.x, self.cursor.y, string.byte(str, i), self.cursor.fc, self.cursor.bc)
+					self:setCharacter(self.cursor.x, self.cursor.y, string.byte(str, i))
 					
 					self.cursor.x = self.cursor.x + 1
 					if self.cursor.x >= self.width then
@@ -244,7 +242,7 @@ function Text.new(width, height)
 							newText[j][i] = self.text[j + y][i + x]
 						else
 							-- Intentional
-							newText[j][i] = {chr = 0, fc = 15, bc = 0}
+							newText[j][i] = self:newCharacter(0)
 						end
 					end
 				end
@@ -255,19 +253,21 @@ function Text.new(width, height)
 	end
 	
 	-- Internal
-	function text:newCharacter(chr, fc, bc, attr)
+	function text:newCharacter(chr, fc, bc, attr, z)
 		return {
 			chr = chr or 0,
-			fc = fc or 15,
-			bc = bc or 0,
-			attr = attr or 0
+			fc = fc or self.cursor.fc,
+			bc = bc or self.cursor.bc,
+			attr = attr or self.cursor.attr,
+			z = z or self.cursor.z
 		}
 	end
-	function text:setCharacter(x, y, chr, fc, bc, attr)
+	function text:setCharacter(x, y, chr, fc, bc, attr, z)
 		self.text[y][x].chr = chr
-		self.text[y][x].fc = fc
-		self.text[y][x].bc = bc
-		self.text[y][x].attr = attr
+		self.text[y][x].fc = fc or self.cursor.fc
+		self.text[y][x].bc = bc or self.cursor.bc
+		self.text[y][x].attr = attr or self.cursor.attr
+		self.text[y][x].z = z or self.cursor.z
 	end
 	
 	-- You found the easter egg!
