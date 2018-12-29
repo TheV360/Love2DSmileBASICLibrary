@@ -62,6 +62,7 @@ function setup()
 	t:print("Hello, world!")
 	t:color(0, 4)
 	t:locate(3, 3)
+	t:attribute(Text.Attributes.FlipH)
 	t:print("Hello, world!")
 	table.insert(fishes, t)
 end

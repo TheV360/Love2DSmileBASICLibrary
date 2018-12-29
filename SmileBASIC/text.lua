@@ -7,12 +7,12 @@ Text = {
 	BackgroundShader = nil,
 	
 	Attributes = {
-		Rot0     = 0x00,
-		Rot90    = 0x02,
-		Rot180   = 0x04,
-		Rot270   = 0x06,
-		FlipH    = 0x08,
-		FlipV    = 0x10
+		Rot0     = 0x0,
+		Rot90    = 0x1,
+		Rot180   = 0x2,
+		Rot270   = 0x3,
+		FlipH    = 0x4,
+		FlipV    = 0x8
 	},
 	Characters = {},
 	Palette = {
@@ -125,18 +125,44 @@ function Text.new(width, height)
 	end
 	function text:draw()
 		local i, j
+		local textHalf = Text.Size / 2
 		
 		Text.BackgroundBatch:clear()
 		Text.Batch:clear()
 		for j = 0, self.height - 1 do
 			for i = 0, self.width - 1 do
-				if self.text[j][i].bc > 0 then
-					Text.BackgroundBatch:setColor(Text.Palette[self.text[j][i].bc])
-					Text.BackgroundBatch:add(Text.Characters[self.text[j][i].chr], i * Text.Size, j * Text.Size)
-				end
-				if self.text[j][i].fc > 0 then
-					Text.Batch:setColor(Text.Palette[self.text[j][i].fc])
-					Text.Batch:add(Text.Characters[self.text[j][i].chr], i * Text.Size, j * Text.Size)
+				if self.text[j][i].fc > 0 or self.text[j][i].bc > 0 then
+					local tmpX = i * Text.Size
+					local tmpY = j * Text.Size
+					
+					local tmpRot = 0
+					
+					local tmpScaleX = bit.band(self.text[j][i].attr, Text.Attributes.FlipH) > 0 and -1 or 1
+					local tmpScaleY = bit.band(self.text[j][i].attr, Text.Attributes.FlipV) > 0 and -1 or 1
+					
+					if bit.band(self.text[j][i].attr, Text.Attributes.Rot90) > 0 then tmpRot = tmpRot + (math.pi / 2) end
+					if bit.band(self.text[j][i].attr, Text.Attributes.Rot180) > 0 then tmpRot = tmpRot + math.pi end
+					
+					if self.text[j][i].bc > 0 then
+						Text.BackgroundBatch:setColor(Text.Palette[self.text[j][i].bc])
+						Text.BackgroundBatch:add(
+							Text.Characters[self.text[j][i].chr],
+							tmpX + textHalf, tmpY + textHalf,
+							tmpRot,
+							tmpScaleX, tmpScaleY,
+							textHalf, textHalf
+						)
+					end
+					if self.text[j][i].fc > 0 then
+						Text.Batch:setColor(Text.Palette[self.text[j][i].fc])
+						Text.Batch:add(
+							Text.Characters[self.text[j][i].chr],
+							tmpX + textHalf, tmpY + textHalf,
+							tmpRot,
+							tmpScaleX, tmpScaleY,
+							textHalf, textHalf
+						)
+					end
 				end
 			end
 		end
@@ -160,7 +186,7 @@ function Text.new(width, height)
 		
 		for j = 0, self.height - 1 do
 			for i = 0, self.width - 1 do
-				self:setCharacter(i, j, 0)
+				self:setCharacter(i, j) -- in this case, reset character (am i right guys)
 			end
 		end
 	end
@@ -202,6 +228,11 @@ function Text.new(width, height)
 		
 		return self.cursor.x, self.cursor.y
 	end
+	function text:attribute(attr)
+		if attr then self.cursor.attr = attr end
+		
+		return self.cursor.attr
+	end
 	function text:color(fc, bc)
 		if fc then self.cursor.fc = fc end
 		if bc then self.cursor.bc = bc end
@@ -241,8 +272,7 @@ function Text.new(width, height)
 						if i + x >= 0 and i + x < self.width and j + y >= 0 and j + y < self.height then
 							newText[j][i] = self.text[j + y][i + x]
 						else
-							-- Intentional
-							newText[j][i] = self:newCharacter(0)
+							newText[j][i] = self:newCharacter(0, Text.Colors.White, Text.Colors.Transparent)
 						end
 					end
 				end
@@ -263,7 +293,7 @@ function Text.new(width, height)
 		}
 	end
 	function text:setCharacter(x, y, chr, fc, bc, attr, z)
-		self.text[y][x].chr = chr
+		self.text[y][x].chr = chr or 0
 		self.text[y][x].fc = fc or self.cursor.fc
 		self.text[y][x].bc = bc or self.cursor.bc
 		self.text[y][x].attr = attr or self.cursor.attr
