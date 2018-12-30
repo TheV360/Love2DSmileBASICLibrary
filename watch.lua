@@ -31,7 +31,7 @@ function Watch.new(keyTable, checkFunction)
 		
 		for _, value in ipairs(self.keys) do
 			self.down[value] = self.check(value)
-			self.press[value] = true
+			self.press[value] = false
 			self.release[value] = false
 			
 			if self.down[value] then

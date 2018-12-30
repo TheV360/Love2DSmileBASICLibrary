@@ -25,7 +25,7 @@
 				
 				<h2 id="getting-started">Getting Started</h2>
 				<p>Want to start making things, but don't want to read through the entire documentation? Here's a small starter program I wrote for you. Replace the <code>game.lua</code> file in the base directory with this, and you'll get some text that prints every frame!</p>
-<pre class="prettyprint linenums"><code class="language-lua"
+<pre class="prettyprint"><code class="language-lua"
 >-- This only happens once
 function setup()
 	-- Make a table to hold all the elements we want to update and draw each frame
@@ -80,7 +80,6 @@ function draw()
 	end
 	ZSort.flush()
 end</code></pre>
-				
 				<h2 id="smilebasic-dot-lua">What's the deal with <code>smilebasic.lua</code>?</h2>
 				<p><code>smilebasic.lua</code> is a sort of abstract class <s>written by a person who doesn't understand abstract classes</s>, that is only used internally. Please don't use it.</p>
 				<p>If you're wondering what it does, it contains one function: <code>SmileBASIC.add()</code>. This function will add some functions and variables to a table given to it. It adds properties like color, offset, scale, and rotation. It also adds some helper functions, such as <code>sb:offset()</code>, <code>sb:scale()</code>, and <code>sb:runCallbacks()</code>. These functions will be explained in the General functions section. Oh, that seems to be the next one!</p>
@@ -91,42 +90,42 @@ end</code></pre>
 					<dl>
 						This moves an object around the screen. It takes an x, y, and z coordinate (in pixels), and returns the current x, y, and z coordinates.
 					</dl>
-					
+					<hr />
 					<dt><code>o:home(x?, y?) -> x, y</code></dt>
 					<dl>
 						This sets the home of an object. It takes an x and y coordinate pair, and returns the current x and y coordinate pair.
 					</dl>
-					
+					<hr />
 					<dt><code>o:rotation(r?) -> r</code></dt>
 					<dl>
 						This sets the rotation of an object. It takes a rotation in degrees and returns the rotation in degrees.
 					</dl>
-					
+					<hr />
 					<dt><code>o:color(r?, g?, b?, a?) -> r, g, b, a</code></dt>
 					<dl>
 						This sets the color of an object. It takes r, g, b, and a values (from 0 to 1), and returns them too.
 					</dl>
-					
+					<hr />
 					<dt><code>o:scale(x?, y?) -> x, y</code></dt>
 					<dl>
 						This sets the size of an object, in coefficients. This means that if you have a 16x16 object and set the scale to (2, 2), it becomes a 32x32 object. Note that if you set only the x value, the y value won't be set along with it. Returns x and y values.
 					</dl>
-					
+					<hr />
 					<dt><code>o:addCallback(callback)</code></dt>
 					<dl>
 						This adds a callback to the object. On sprites, backgrounds, and text objects, these are called every <code>o:update()</code>.
 					</dl>
-					
+					<hr />
 					<dt><code>o:removeCallback(callback)</code></dt>
 					<dl>
 						This removes a callback to the object. The callback must be the same as the one you added. This means you can't remove anonymous functions, so if you ever want to remove a callback you must name it.
 					</dl>
-					
+					<hr />
 					<dt><code>o:variable(index, value?) -> value</code></dt>
 					<dl>
 						This, if given a value, will set the given index to that value. By default there are 8 internal variables. It doesn't matter if you use an index that doesn't exist. Heck, it's sorta encouraged. If you supply a value or not, the current value will be returned.
 					</dl>
-					
+					<hr />
 					<dt><code>o:clear()</code></dt>
 					<dl>
 						This kills the object.
