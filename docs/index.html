@@ -87,49 +87,49 @@ end</code></pre>
 				<h2 id="general-functions">General Functions</h2>
 				<dl>
 					<dt><code>o:offset(x?, y?, z?) -> x, y, z</code></dt>
-					<dl>
+					<dd>
 						This moves an object around the screen. It takes an x, y, and z coordinate (in pixels), and returns the current x, y, and z coordinates.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:home(x?, y?) -> x, y</code></dt>
-					<dl>
+					<dd>
 						This sets the home of an object. It takes an x and y coordinate pair, and returns the current x and y coordinate pair.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:rotation(r?) -> r</code></dt>
-					<dl>
+					<dd>
 						This sets the rotation of an object. It takes a rotation in degrees and returns the rotation in degrees.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:color(r?, g?, b?, a?) -> r, g, b, a</code></dt>
-					<dl>
+					<dd>
 						This sets the color of an object. It takes r, g, b, and a values (from 0 to 1), and returns them too.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:scale(x?, y?) -> x, y</code></dt>
-					<dl>
+					<dd>
 						This sets the size of an object, in coefficients. This means that if you have a 16x16 object and set the scale to (2, 2), it becomes a 32x32 object. Note that if you set only the x value, the y value won't be set along with it. Returns x and y values.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:addCallback(callback)</code></dt>
-					<dl>
+					<dd>
 						This adds a callback to the object. On sprites, backgrounds, and text objects, these are called every <code>o:update()</code>.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:removeCallback(callback)</code></dt>
-					<dl>
+					<dd>
 						This removes a callback to the object. The callback must be the same as the one you added. This means you can't remove anonymous functions, so if you ever want to remove a callback you must name it.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:variable(index, value?) -> value</code></dt>
-					<dl>
+					<dd>
 						This, if given a value, will set the given index to that value. By default there are 8 internal variables. It doesn't matter if you use an index that doesn't exist. Heck, it's sorta encouraged. If you supply a value or not, the current value will be returned.
-					</dl>
-					<hr />
+					</dd>
+					
 					<dt><code>o:clear()</code></dt>
-					<dl>
+					<dd>
 						This kills the object.
-					</dl>
+					</dd>
 				</dl>
 				
 				<h2 id="sprite-functions">Sprite Functions</h2>
