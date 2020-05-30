@@ -1,5 +1,3 @@
-game/game.lua
-docs/bulletHeckDesignDoc.md
 .vscode/
 .oldGarbageYouShouldntUse/
 profile.lua

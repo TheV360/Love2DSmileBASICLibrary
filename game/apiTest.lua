@@ -87,21 +87,21 @@ end
 
 function becomeFunky(sprite)
 	sprite:offset(
-		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], sprite.variables[2], true) + (window.screen.width / 2),
-		cosine(window.frames + sprite.variables[1], 90 + sprite.variables[4], sprite.variables[3], true) + (window.screen.height / 2)--[[,
-		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], 5, true)]]
+		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], sprite.variables[2], true) + (window.screen.width / 2),
+		Util.cosine(window.frames + sprite.variables[1], 90 + sprite.variables[4], sprite.variables[3], true) + (window.screen.height / 2)--[[,
+		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], 5, true)]]
 	)
 	sprite:rotation(
 		sprite:rotation() + 2
 	)
 	sprite:color(
-		sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], .5, true) + 1,
-		sine(window.frames + sprite.variables[1], 180 + sprite.variables[4], .5, true) + 1,
-		sine(window.frames + sprite.variables[1], 240 + sprite.variables[4], .5, true) + 1
+		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], .5, true) + 1,
+		Util.sine(window.frames + sprite.variables[1], 180 + sprite.variables[4], .5, true) + 1,
+		Util.sine(window.frames + sprite.variables[1], 240 + sprite.variables[4], .5, true) + 1
 	)
 	sprite:scale(
-		sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3,
-		sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3
+		Util.sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3,
+		Util.sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3
 	)
 	
 	-- if window.frames % 60 ==  0 then sprite:toggleAttribute(Sprites.Attributes.FlipH) end
@@ -112,7 +112,7 @@ end
 
 function alsoProbablyFunky(bg)
 	bg:offset(
-		sine(window.frames + (bg.variables[1] * 8), 120, 32, true), 0
+		Util.sine(window.frames + (bg.variables[1] * 8), 120, 32, true), 0
 	)
 	
 	local i, j
@@ -130,7 +130,7 @@ end
 function sineFunky(thing)
 	thing:offset(
 		thing.variables[1],
-		thing.variables[2] + math.floor(sine(window.frames + (thing.index * 4), 120, 16, true) + .5)
+		thing.variables[2] + math.floor(Util.sine(window.frames + (thing.index * 4), 120, 16, true) + .5)
 	)
 	thing:rotation(
 		thing:rotation() + 2

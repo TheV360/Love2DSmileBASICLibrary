@@ -48,9 +48,11 @@ This repo is split into a bunch of separate folders and files.
 
 # To-do
 
-* Completely separate the main.lua and everything else. `main.lua` is my Love2D template, and I don't want that to get in the way of anyone wanting to use this.
-* The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
 * Add attributes to text
+* Add 8x8 tiles and 32x32 tiles. Maybe just add ?x? tiles?
+* Use [C FFI](http://luajit.org/ext_ffi.html) structs for some internal things (such as map tiles, maybe SPDEF data), to speed the library up a bit.
+* Clean up parts of library
+* The new icon I drew has both the red and blue parts split 50/50. This is not the case in the actual Love2D logo. Too lazy to fix
 
 # Issues? Improvements?
 

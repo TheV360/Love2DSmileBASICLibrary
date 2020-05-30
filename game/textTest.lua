@@ -28,16 +28,16 @@ function update()
 		t:print("Hello, world!" .. string.char(10) .. string.char(13) .. "This sentence is too long to fit on one line of the text screen.", false)
 	end
 	
-	if button.downTime["up"] % 5 == 1 then
+	if window.button.downTime["up"] % 5 == 1 then
 		t2:scroll(0, 1, true)
 	end
-	if button.downTime["down"] % 5 == 1 then
+	if window.button.downTime["down"] % 5 == 1 then
 		t2:scroll(0, -1, true)
 	end
-	if button.downTime["left"] % 5 == 1 then
+	if window.button.downTime["left"] % 5 == 1 then
 		t2:scroll(1, 0, true)
 	end
-	if button.downTime["right"] % 5 == 1 then
+	if window.button.downTime["right"] % 5 == 1 then
 		t2:scroll(-1, 0, true)
 	end
 	

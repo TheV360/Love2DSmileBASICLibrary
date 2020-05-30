@@ -34,12 +34,12 @@ function setup()
 	-- Make a text screen
 	t = Text.new(50, 30) -- Make a 50x30 text screen
 	table.insert(sb, t) -- Add its reference to the "sb" table.
-	t:fakeBoot() -- ;)
+	t:fakeBoot() -- Add a fake boot screen.
 	t:color(0, 15) -- Make the text transparent on a background of white.
 	
 	-- Print some test text to the text screen
 	-- Note that this does not have a second argument, so it will put a line break at the end.
-	t:print("This is an example script, showing off the text layer, sprites, and a background! SmileBASIC isn't real")
+	t:print("This is an example script showcasing the Love2D SmileBASIC Library, a library for constructing Love2D games with a SmileBASIC aesthetic.")
 	
 	-- Make a bunch of sprites
 	for i = 0, 63 do

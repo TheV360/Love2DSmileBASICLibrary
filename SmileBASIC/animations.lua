@@ -16,10 +16,14 @@ Animations = {
 		Variable    = 7, V  = 7
 	},
 	
+	Lerp = function(t, a, b) return a + t * (b - a) end,
+	LerpF = function(f, t, a, b) return a + f(t) * (b - a) end,
+	
 	Timing = {
-		Instant = function(t, a, b) return b end,
-		Linear = function(t, a, b) return a + t * (b - a) end,
-		Sine = function(t, a, b) return Animations.Timing.Linear(math.pow(math.sin(math.pi * .5 * t), 2), a, b) end
+		Instant = function(t) return 1 end,
+		Linear = function(t) return t end,
+		Sine = function(t) return math.pow(math.sin(math.pi * .5 * t), 2) end,
+		Quadratic = function(t) return t * t end
 	}
 }
 
@@ -47,7 +51,7 @@ function Animations.new(table, type, relative, keyframes, loop)
 	local animation = {
 		table = table,
 		type = type,
-		relative = relative or true,
+		relative = relative or false,
 		current = {
 			index = 1,
 			frames = 0,
@@ -162,20 +166,22 @@ function Animations.new(table, type, relative, keyframes, loop)
 		end
 	end
 	function animation:animate(index)
-		-- if self.relative then
-		-- 	return self.keyframes[0].item[index] + 
-		-- 	self.keyframes[self.current.index].timingFunction(
-		-- 		self.current.frames / self.current.endFrame,
-		-- 		self.keyframes[self.current.index - 1].item[index],
-		-- 		self.keyframes[self.current.index].item[index]
-		-- 	)
-		-- else
-			return self.keyframes[self.current.index].timingFunction(
-				self.current.frames / self.current.endFrame,
-				self.keyframes[self.current.index - 1].item[index],
-				self.keyframes[self.current.index].item[index]
-			)
-		-- end
+		local f = self.keyframes[self.current.index].timingFunction
+		local t = self.current.frames / self.current.endFrame
+		local a = 0
+		local b = self.keyframes[self.current.index].item[index]
+		
+		if self.relative then
+			if self.current.index > 1 then
+				a = self.keyframes[self.current.index - 1].item[index]
+			end
+			
+			return self.keyframes[0].item[index] + Animations.LerpF(f, t, a, b)
+		else
+			a = self.keyframes[self.current.index - 1].item[index]
+			
+			return Animations.LerpF(f, t, a, b)
+		end
 	end
 	
 	animation:setup()

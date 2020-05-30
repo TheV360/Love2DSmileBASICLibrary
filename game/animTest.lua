@@ -6,24 +6,32 @@ function setup()
 	t:fakeBoot(nil, nil, "MINECRAFT2D")
 	
 	s = Sprites.new(math.random(0, 15))
+	s:offset(64, 64)
 	s:home(8, 8)
 	table.insert(sb, s)
 	
 	-- NOT FINAL SYNTAX!
-	s.animations[1] = Animations.new(s, Animations.Types.Offset, false, {
-		Animations.animationPart(120, {64, 64}, Animations.Timing.Sine),
-		Animations.animationPart(60, {0, 32}, Animations.Timing.Linear),
-		Animations.animationPart(60, {200, 120}, Animations.Timing.Linear)
-	}, 0)
-	s.animations[2] = Animations.new(s, Animations.Types.Rotation, false, {
-		Animations.animationPart(120, {360}, Animations.Timing.Linear),
-		Animations.animationPart(120, {0}, Animations.Timing.Linear)
-	}, 0)
-	s.animations[3] = Animations.new(s, Animations.Types.Scale, false, {
-		Animations.animationPart(180, {1,1}, Animations.Timing.Instant),
-		Animations.animationPart(20, {2,4}, Animations.Timing.Sine),
-		Animations.animationPart(20, {4,2}, Animations.Timing.Sine),
-		Animations.animationPart(20, {4,4}, Animations.Timing.Sine)
+	-- s.animations[1] = Animations.new(s, Animations.Types.Offset, false, {
+	-- 	Animations.animationPart(120, {64, 64}, Animations.Timing.Sine),
+	-- 	Animations.animationPart(60, {0, 32}, Animations.Timing.Linear),
+	-- 	Animations.animationPart(60, {200, 120}, Animations.Timing.Linear)
+	-- }, 0)
+	-- s.animations[2] = Animations.new(s, Animations.Types.Rotation, false, {
+	-- 	Animations.animationPart(120, {360}, Animations.Timing.Linear),
+	-- 	Animations.animationPart(120, {0}, Animations.Timing.Linear)
+	-- }, 1)
+	-- s.animations[3] = Animations.new(s, Animations.Types.Scale, false, {
+	-- 	Animations.animationPart(180, {1,1}, Animations.Timing.Instant),
+	-- 	Animations.animationPart(20, {2,4}, Animations.Timing.Sine),
+	-- 	Animations.animationPart(20, {4,2}, Animations.Timing.Sine),
+	-- 	Animations.animationPart(20, {4,4}, Animations.Timing.Sine)
+	-- }, 0)
+	
+	s.animations[1] = Animations.new(s, Animations.Types.Offset, true, {
+		Animations.animationPart(90, {32, 32}, Animations.Timing.Linear),
+		Animations.animationPart(90, {32, 0}, Animations.Timing.Linear),
+		Animations.animationPart(90, {0, 32}, Animations.Timing.Linear),
+		Animations.animationPart(90, {0, 0}, Animations.Timing.Linear),
 	}, 0)
 	
 	for i = 0, 63 do
@@ -33,7 +41,7 @@ function setup()
 		s.animations[1] = Animations.new(s, Animations.Types.Offset, false, {
 			Animations.animationPart(120, {400 - math.floor(i / 16) * 16, (i % 16) * 16}, Animations.Timing.Linear),
 			Animations.animationPart(60, {400 - (i % 16) * 16, 240}, Animations.Timing.Linear),
-			Animations.animationPart(60, {400 - (i % 16), 240}, Animations.Timing.Sine)
+			Animations.animationPart(60, {400, 240}, Animations.Timing.Sine)
 		}, 0)
 	end
 	
