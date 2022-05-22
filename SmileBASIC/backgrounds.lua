@@ -16,7 +16,6 @@ Backgrounds = {
 		Indexes = {}
 	},
 	
-	-- Enum, please don't change!
 	Attributes = {
 		Tile   = 0x0fff,
 		Rot0   = 0x0000,
@@ -43,8 +42,8 @@ Backgrounds.Batch = love.graphics.newSpriteBatch(Backgrounds.Sheet)
 Backgrounds.Tiles.Width  = math.floor(Backgrounds.Sheet:getWidth()  / Backgrounds.Tiles.Size)
 Backgrounds.Tiles.Height = math.floor(Backgrounds.Sheet:getHeight() / Backgrounds.Tiles.Size)
 
-Backgrounds.Tiles.ScreenWidth  = math.floor(window.screen.width  / Backgrounds.Tiles.Size)
-Backgrounds.Tiles.ScreenHeight = math.floor(window.screen.height / Backgrounds.Tiles.Size)
+Backgrounds.Tiles.ScreenWidth  = 1
+Backgrounds.Tiles.ScreenHeight = 1
 
 local i, j
 for j = 0, Backgrounds.Tiles.Height - 1 do
@@ -57,6 +56,11 @@ for j = 0, Backgrounds.Tiles.Height - 1 do
 			Backgrounds.Sheet:getDimensions()
 		)
 	end
+end
+
+function Backgrounds.setup(screenWidth, screenHeight)
+	Backgrounds.Tiles.ScreenWidth  = math.floor(screenWidth  / Backgrounds.Tiles.Size)
+	Backgrounds.Tiles.ScreenHeight = math.floor(screenHeight / Backgrounds.Tiles.Size)
 end
 
 function Backgrounds.new(width, height)
@@ -108,13 +112,13 @@ function Backgrounds.new(width, height)
 					local tmpScaleX = bit.band(self.map[j][i], Backgrounds.Attributes.FlipH) > 0 and -1 or 1
 					local tmpScaleY = bit.band(self.map[j][i], Backgrounds.Attributes.FlipV) > 0 and -1 or 1
 					
-					if bit.band(self.map[j][i], Backgrounds.Attributes.Rot90) > 0 then tmpRot = tmpRot + (math.pi / 2) end
-					if bit.band(self.map[j][i], Backgrounds.Attributes.Rot180) > 0 then tmpRot = tmpRot + math.pi end
+					if bit.band(self.map[j][i], Backgrounds.Attributes.Rot90) > 0 then tmpRot = tmpRot + 0.25 end
+					if bit.band(self.map[j][i], Backgrounds.Attributes.Rot180) > 0 then tmpRot = tmpRot + 0.5 end
 					
 					Backgrounds.Batch:add(
 						Backgrounds.Tiles.Indexes[bit.band(self.map[j][i], Backgrounds.Attributes.Tile)],
 						tmpX + tileHalf, tmpY + tileHalf,
-						tmpRot,
+						tmpRot * math.pi * 2,
 						tmpScaleX, tmpScaleY,
 						tileHalf, tileHalf
 					)

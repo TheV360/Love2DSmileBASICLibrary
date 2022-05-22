@@ -23,21 +23,21 @@ end
 function update()
 	t:locate(math.random(0, t.width - 1), math.random(15, t.height - 2))
 	t:color(math.random(0, 15), math.random(2, 15))
-	if window.frames % 10 == 0 then
+	if time.frames % 10 == 0 then
 		t:attribute(math.random(0, 0xf))
 		t:print("Hello, world!" .. string.char(10) .. string.char(13) .. "This sentence is too long to fit on one line of the text screen.", false)
 	end
 	
-	if window.button.downTime["up"] % 5 == 1 then
+	if input:pressed("up") then
 		t2:scroll(0, 1, true)
 	end
-	if window.button.downTime["down"] % 5 == 1 then
+	if input:pressed("down") then
 		t2:scroll(0, -1, true)
 	end
-	if window.button.downTime["left"] % 5 == 1 then
+	if input:pressed("left") then
 		t2:scroll(1, 0, true)
 	end
-	if window.button.downTime["right"] % 5 == 1 then
+	if input:pressed("right") then
 		t2:scroll(-1, 0, true)
 	end
 	
@@ -45,7 +45,7 @@ function update()
 		sb[i]:update()
 	end
 	
-	h_shader:send("time", window.frames / 120)
+	h_shader:send("time", time.seconds / 2)
 end
 
 function draw()

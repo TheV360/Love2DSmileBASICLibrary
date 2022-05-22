@@ -18,8 +18,8 @@ function setup()
 		thisOne:home(8, 8)
 		thisOne:rotation(i * 8)
 		thisOne.variables[1] = 0--i * 3
-		thisOne.variables[2] = (window.screen.width / 8) + (i * 2)
-		thisOne.variables[3] = (window.screen.height / 8) + (i * 2)
+		thisOne.variables[2] = (screen.size.x / 8) + (i * 2)
+		thisOne.variables[3] = (screen.size.y / 8) + (i * 2)
 		thisOne.variables[4] = i * 2
 		thisOne:addCallback(becomeFunky)
 	end
@@ -46,7 +46,7 @@ function setup()
 	for i = 1, #thing do
 		-- thing[i]:addCallback(alsoProbablyFunky)
 		thing[i].variables[1] = i - 1
-		thing[i]:color(1,1,1,.125)
+		thing[i]:color(1,1,1,0.5)
 	end
 	
 	thing[1].z = 0
@@ -86,43 +86,40 @@ function draw()
 end
 
 function becomeFunky(sprite)
+	local f = time.frames
 	sprite:offset(
-		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], sprite.variables[2], true) + (window.screen.width / 2),
-		Util.cosine(window.frames + sprite.variables[1], 90 + sprite.variables[4], sprite.variables[3], true) + (window.screen.height / 2)--[[,
-		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], 5, true)]]
+		Util.sine(  f + sprite.variables[1], 120 + sprite.variables[4], sprite.variables[2], true) + (screen.size.x / 2),
+		Util.cosine(f + sprite.variables[1],  90 + sprite.variables[4], sprite.variables[3], true) + (screen.size.y / 2)
 	)
 	sprite:rotation(
 		sprite:rotation() + 2
 	)
 	sprite:color(
-		Util.sine(window.frames + sprite.variables[1], 120 + sprite.variables[4], .5, true) + 1,
-		Util.sine(window.frames + sprite.variables[1], 180 + sprite.variables[4], .5, true) + 1,
-		Util.sine(window.frames + sprite.variables[1], 240 + sprite.variables[4], .5, true) + 1
+		Util.sine(f + sprite.variables[1], 120 + sprite.variables[4], .5, true) + 1,
+		Util.sine(f + sprite.variables[1], 180 + sprite.variables[4], .5, true) + 1,
+		Util.sine(f + sprite.variables[1], 240 + sprite.variables[4], .5, true) + 1
 	)
 	sprite:scale(
-		Util.sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3,
-		Util.sine(window.frames + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3
+		Util.sine(f + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3,
+		Util.sine(f + sprite.variables[1], 90 + sprite.variables[4], 2, true) + 3
 	)
-	
-	-- if window.frames % 60 ==  0 then sprite:toggleAttribute(Sprites.Attributes.FlipH) end
-	-- if window.frames % 60 == 15 then sprite:toggleAttribute(Sprites.Attributes.FlipV) end
-	-- if window.frames % 60 == 30 then sprite:toggleAttribute(Sprites.Attributes.Rot90) end
-	-- if window.frames % 60 == 45 then sprite:toggleAttribute(Sprites.Attributes.Rot180) end
 end
 
 function alsoProbablyFunky(bg)
+	local f = time.frames
+	
 	bg:offset(
-		Util.sine(window.frames + (bg.variables[1] * 8), 120, 32, true), 0
+		Util.sine(f + (bg.variables[1] * 8), 120, 32, true), 0
 	)
 	
 	local i, j
 	
 	for j = 0, bg.height - 1 do
 		for i = 0, bg.width - 1 do
-			if window.frames % 60 ==  0 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipH) end
-			if window.frames % 60 == 15 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipV) end
-			if window.frames % 60 == 30 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot90) end
-			if window.frames % 60 == 45 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot180) end
+			if f % 60 ==  0 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipH) end
+			if f % 60 == 15 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.FlipV) end
+			if f % 60 == 30 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot90) end
+			if f % 60 == 45 then bg.map[j][i] = bit.bxor(bg.map[j][i], Backgrounds.Attributes.Rot180) end
 		end
 	end
 end
@@ -130,7 +127,7 @@ end
 function sineFunky(thing)
 	thing:offset(
 		thing.variables[1],
-		thing.variables[2] + math.floor(Util.sine(window.frames + (thing.index * 4), 120, 16, true) + .5)
+		thing.variables[2] + math.floor(Util.sine(time.frames + (thing.index * 4), 120, 16, true) + .5)
 	)
 	thing:rotation(
 		thing:rotation() + 2

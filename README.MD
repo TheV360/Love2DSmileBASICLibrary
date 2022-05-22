@@ -60,7 +60,7 @@ Tell me! I really want to help people port their SmileBASIC programs to other la
 
 # License
 
-Just don't steal it and pass it off as your own thing, okay?
+MIT / "do whatever just credit me" double-license
 
 # Credits
 

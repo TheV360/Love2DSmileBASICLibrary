@@ -29,7 +29,7 @@ end
 -- Every frame, do this
 function update()
 	-- We didn't lose the text reference, so print some text every few frames
-	if window.frames % 8 == 0 then -- My "built-in" frames variable
+	if time.frames % 8 == 0 then -- My "built-in" time object -- with frames
 		t:print("Hello, world! ", false) -- We don't want a line break, so put false at the end.
 	end
 	
