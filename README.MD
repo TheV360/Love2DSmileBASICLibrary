@@ -60,11 +60,13 @@ Tell me! I really want to help people port their SmileBASIC programs to other la
 
 # License
 
-MIT / "do whatever just credit me" double-license
+MIT License
 
 # Credits
 
-* V360 - All of the code, Sprite definition listings
+* V360 - Most of the code, Sprite definition listings
+* rxi - [Classic](https://github.com/rxi/classic), a bundled library that implements the object type I use extensively.
+* tesselode - [Baton](https://github.com/tesselode/baton), a bundled library that implements a better input system than the one I had made before.
 * SmileBoom - Most assets, also for making SmileBASIC
 * [otya](https://github.com/otya128) - Working on a similar thing that deserves a lot of credit
 * [12Me21](https://github.com/12Me21) - Better character listings
