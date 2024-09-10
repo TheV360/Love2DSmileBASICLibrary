@@ -28,10 +28,9 @@ This repo is split into a bunch of separate folders and files.
 * `resources/`: Some things in this are important, some things in this aren't.
 	* `characters.csv`: Very important. ~~[Stolen from otyaSmileBASIC](https://github.com/otya128/otyaSMILEBASIC/blob/master/SMILEBASIC/resources/fonttable.txt)~~ [Generously donated by 12Me21](https://github.com/TheV360/Love2DSmileBASICLibrary/pull/1). Used for the text layer's font.
 	* `sprites.csv`: Relatively important. If you leave these out, that's completely fine. Used for Sprite definitions.
-	* `font_8x8.png` and `font_16x8.png`: Not important. If you want some debug fonts, here you go. The 8x8 one is the regular SmileBASIC font. The 16x8 one is made by me.
-	* `icon.png`: Not important. Fish.
+	* `icon.png`: Customizable icon for use in taskbar and window decorations.
 	* `sprites.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/sprites.lua`.
-	* `text.png`: Very important. Used in `SmileBASIC/text.lua`.
+	* `text.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/text.lua`.
 	* `tiles.png`: Very important. **REPLACE THIS WITH THE ACTUAL VERSION BEFORE USING**. Used in `SmileBASIC/backgrounds.lua`. Inconsistent naming, but okay.
 * `SmileBASIC/`: Contains all the modules. Or whatever they're called.
 	* `animations.lua`: Unfinished. For animating Sprites and Backgrounds.
@@ -64,9 +63,9 @@ MIT License
 
 # Credits
 
-* V360 - Most of the code, Sprite definition listings
-* rxi - [Classic](https://github.com/rxi/classic), a bundled library that implements the object type I use extensively.
-* tesselode - [Baton](https://github.com/tesselode/baton), a bundled library that implements a better input system than the one I had made before.
-* SmileBoom - Most assets, also for making SmileBASIC
-* [otya](https://github.com/otya128) - Working on a similar thing that deserves a lot of credit
-* [12Me21](https://github.com/12Me21) - Better character listings
+* V360 - Most of the code, Sprite definitions dump from SmileBASIC
+* rxi - [Classic](https://github.com/rxi/classic), a bundled library that implements the object type I use extensively. - MIT License
+* tesselode - [Baton](https://github.com/tesselode/baton), a bundled library that implements a better input system than the one I had made before. - MIT License
+* SmileBoom - Original assets, also for making SmileBASIC
+* [otya](https://github.com/otya128) - Made a relatively complete reimplementation of SmileBASIC 3, check it out!
+* [12Me21](https://github.com/12Me21) - Correct character definitions dump from SmileBASIC
